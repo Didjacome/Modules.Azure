@@ -8,6 +8,7 @@ Export Rbac permissions at different levels in CSV
 Run the Role-RBAC.ps1 script
 
 Connect-AzAccount 
+
 .\Role-RBAC.ps1
 
 
