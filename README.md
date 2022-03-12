@@ -32,7 +32,8 @@ output:
 Run the Get-AzADGroupRBAC module
 
 <#
- 	.SYNOPSIS
+      
+      .SYNOPSIS
       #################################################################################################################
       #                              Criador: Diogo De Santana Jacome                                                 #
       #                              Empresa:  Solo Network                                                           #
@@ -43,6 +44,7 @@ Run the Get-AzADGroupRBAC module
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
+      
       GET-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
     
     .DESCRIPTION
