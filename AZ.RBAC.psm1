@@ -1,25 +1,3 @@
-# GET-RBAC
-
-# Summary
-Export Rbac permissions at different levels in CSV
-
-# Stage
-Run the Role-RBAC.ps1 script
-
-Connect-AzAccount 
-
-.\Role-RBAC.ps1
-
-output:
-
-
-![image](https://user-images.githubusercontent.com/83463639/147241750-39772d71-957f-4753-8be1-9f749a6c7068.png)
-
-
-Import-Module .\AZ.RBAC.psm1
-
-Run the Get-AzADGroupRBAC module
-
 <#
  	.SYNOPSIS
       #################################################################################################################
@@ -59,12 +37,60 @@ Run the Get-AzADGroupRBAC module
         
 #>
 
+function  Get-AzADGroupRBAC {
 
-
-
-
-
-
-
-
-
+  [CmdletBinding(DefaultParameterSetName='group')]
+  
+  param(
+     [Parameter(ParameterSetName='group')]
+     [string]
+     $group,
+   
+   
+     [Parameter(Position=0,
+     Mandatory,ValueFromPipelineByPropertyName,
+     ValueFromPipeline,ParameterSetName='import')]
+     [string]
+     $Import
+   )
+ 
+   
+     $Validar_Import = Test-Path $Import 
+     $ValidarGP = Get-AzRoleAssignment  |  Where-Object ObjectType -eq Group | Where-Object DisplayName -like $group | Select-Object -ExpandProperty DisplayName 
+  
+ 
+   if ( $Validar_Import -eq $true){
+ 
+     $var1 = Import-Csv c:\users\$env:username\Documents\Group_RBAC.csv | Select-Object -ExpandProperty DisplayName
+   }
+   elseif ( $ValidarGP -like $group ) {
+     
+     $var1 = $group
+     
+   }
+   else {
+     Write-Host "Group does not exist or Csv import error
+ 
+     Please go to "https://github.com/Didjacome/GET-RBAC"" 
+   }
+ 
+     
+      
+ 
+  foreach ($var2 in $var1)
+   {   
+ 
+   $RoleGroup = Get-AzRoleAssignment  |  Where-Object ObjectType -eq Group | Where-Object  DisplayName -like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
+ 
+   $ScopeRBAC = Get-AzRoleAssignment  |  Where-Object ObjectType -eq Group | Where-Object  DisplayName -like $var2  | Select-Object -ExpandProperty Scope 
+   
+   $GroupAssignment = Get-AzRoleAssignment  |  Where-Object ObjectType -eq Group | Where-Object  DisplayName -like $var2  | Select-Object -ExpandProperty DisplayName
+ 
+   $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName 
+ 
+   foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object DisplayName,@{n="SignInName";e={$_.Mail}},@{n="RoleDefinitionName";e={"$RoleGroup"}},@{n="Scope";e={"$ScopeRBAC"}},@{n="associated group";e={"$GroupAssignment"}}}
+ 
+   }
+ }
+ 
+ 
