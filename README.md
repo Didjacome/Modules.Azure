@@ -12,11 +12,22 @@ Connect-AzAccount
 
 output:
 
+![image](https://user-images.githubusercontent.com/83463639/158035768-0b4dce52-bf0b-49ab-90e3-4e31ac00bd9c.png)
 
-![image](https://user-images.githubusercontent.com/83463639/147241750-39772d71-957f-4753-8be1-9f749a6c7068.png)
+
+![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
 
 
 Import-Module .\AZ.RBAC.psm1
+
+Get-Module 
+
+output:
+
+![image](https://user-images.githubusercontent.com/83463639/158035514-8cb7173b-0b75-4000-a22c-ad432de755f6.png)
+
+
+
 
 Run the Get-AzADGroupRBAC module
 
