@@ -66,15 +66,15 @@ function  Get-AzADGroupRBAC {
       
       if ( $Validar_Import -eq $true) {
  
-        $var1 = Import-Csv $Import | Select-Object -ExpandProperty DisplayName
+        $var1 = Import-Csv $Import -UseCulture | Select-Object -ExpandProperty DisplayName
 
         foreach ($var2 in $var1) {   
  
-          $RoleGroup = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
+          $RoleGroup = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
      
-          $ScopeRBAC = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
+          $ScopeRBAC = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
        
-          $GroupAssignment = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
+          $GroupAssignment = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
      
           $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName 
      
@@ -93,7 +93,7 @@ function  Get-AzADGroupRBAC {
  
     if ( $PSCmdlet.ParameterSetName -eq 'Group' ) {
     
-      $ValidarGP = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $Group | Select-Object -ExpandProperty DisplayName 
+      $ValidarGP = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $Group | Select-Object -ExpandProperty DisplayName 
      
       if ( $ValidarGP -like $Group ) {
      
@@ -101,11 +101,11 @@ function  Get-AzADGroupRBAC {
 
         foreach ($var2 in $var1) {   
  
-          $RoleGroup = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
+          $RoleGroup = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
      
-          $ScopeRBAC = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
+          $ScopeRBAC = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
        
-          $GroupAssignment = Get-AzRoleAssignment  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
+          $GroupAssignment = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
      
           $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName 
      
