@@ -1,39 +1,32 @@
-# GET-RBAC and Get-AzADGroupRBAC
+# Set-AzTag
 
 # Summary
-Export Rbac permissions at different levels in CSV
+Configure tags on all resources in a resource group
 
 # Stage
-Run the Role-RBAC.ps1 script
-
-Connect-AzAccount 
-
-.\Role-RBAC.ps1
-
-output:
-
-![image](https://user-images.githubusercontent.com/83463639/158035768-0b4dce52-bf0b-49ab-90e3-4e31ac00bd9c.png)
-
-
-![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
 
 
 Import-Module .\Az.Adm.psm1
+
+<br><br>
 
 Get-Module 
 
 output:
 
-![image](https://user-images.githubusercontent.com/83463639/158035514-8cb7173b-0b75-4000-a22c-ad432de755f6.png)
+<br><br><br>
+For you to execute this function it is necessary to inform the Resource Group Name
+<br> <br> <br>
+Csv must have a TAG NAME column and a TAG VALUE column <br>
+Example:
+<br> <br> <br>
 
+Run the Set-AzTag function
 
-
-
-Run the Get-AzADGroupRBAC module
+<br><br>
 
 <#
-      
-      .SYNOPSIS
+ 	.SYNOPSIS
       #################################################################################################################
       #                              Criador: Diogo De Santana Jacome                                                 #
       #                              Empresa:  Solo Network                                                           #
@@ -44,40 +37,24 @@ Run the Get-AzADGroupRBAC module
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
-      
-      GET-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Set-AzTag is an advanced function that can be used to configure tags on all resources in a resource group
     
     .DESCRIPTION
-      GET-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Set-AzTag is an advanced function that can be used to configure tags on all resources in a resource group
 
-      You need to be connected to Azure subscription 
+      You need to be signed in to the Azure subscription
 
-      You need to have role Reader permission on Azure subscription and in Azure AD
-
-
-
+      You need to have permission on the Azure subscription
     
     .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -import .\AZAD_Groups.csv
+      C:\PS> Set-AzTag -RG "My Resource Group Name" -ImportCSV .\Tags.csv
 				
     .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -group GP-Ower
+      C:\PS> Set-AzTag -RG "My Resource Group Name" -Tag_Name Env -Tag_value PRD
     
-    .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -import .\AZAD_Groups.csv | export-csv Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
+
 		.LINK 
-      https://github.com/Didjacome/GET-RBAC
-
-	
-        
-#>
-
-
-
-
-
-
-
+      https://github.com/Didjacome        
 
 
 
