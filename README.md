@@ -17,6 +17,8 @@ Check all users from groups that have RBAC permission
 <br><br>
 Example:
 
+![image](https://user-images.githubusercontent.com/83463639/158490268-47d96c7e-2123-476f-b758-e17f1cdf968b.png)
+
 
 
 ## function Set-AzTag
@@ -25,6 +27,9 @@ Example:
 Place Tags on all resources in a resource group
 <br><br>
 Example:
+
+![image](https://user-images.githubusercontent.com/83463639/158490828-4ab781ea-00a4-438f-bd97-32335b711669.png)
+
 
 
 <br><br>
@@ -47,6 +52,9 @@ Verifica todos os usarios que estão em grupo e tenham permição de RBAC
 <br><br>
 Exemplo:
 
+![image](https://user-images.githubusercontent.com/83463639/158490323-2e2f30ea-1efc-487c-bc68-31a8b906f939.png)
+
+
 
 
 ## Função Set-AzTag
@@ -55,11 +63,4 @@ Cria/subistitui as tags que estão no Resouce Group e seus recursos
 <br><br>
 Exemplo:
 
-
-
-
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/83463639/158490832-891014fc-0ed1-4bc3-aa32-86bed80fc2d6.png)
