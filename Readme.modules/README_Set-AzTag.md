@@ -14,11 +14,17 @@ Get-Module
 
 output:
 
+![image](https://user-images.githubusercontent.com/83463639/158466944-4d6f4967-26c5-491c-a0cc-eaa7467fd89a.png)
+
+
 <br><br><br>
 For you to execute this function it is necessary to inform the Resource Group Name
 <br> <br> <br>
 Csv must have a TAG NAME column and a TAG VALUE column <br>
 Example:
+
+![image](https://user-images.githubusercontent.com/83463639/158466800-a954dacc-b634-494c-89e9-a25e8719eb51.png)
+
 <br> <br> <br>
 
 Run the Set-AzTag function
@@ -26,7 +32,8 @@ Run the Set-AzTag function
 <br><br>
 
 <#
- 	.SYNOPSIS
+
+     .SYNOPSIS
       #################################################################################################################
       #                              Criador: Diogo De Santana Jacome                                                 #
       #                              Empresa:  Solo Network                                                           #
@@ -53,7 +60,7 @@ Run the Set-AzTag function
       C:\PS> Set-AzTag -RG "My Resource Group Name" -Tag_Name Env -Tag_value PRD
     
 
-		.LINK 
+    .LINK 
       https://github.com/Didjacome        
 
 
