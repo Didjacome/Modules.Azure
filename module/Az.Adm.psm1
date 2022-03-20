@@ -204,12 +204,13 @@ function Set-AzTag {
       $rg_id = (Get-AzResourceGroup -Name $RG).ResourceId
   
       $all_resource_id = (Get-AzResource -ResourceGroupName $RG).ResourceId
-  
+      
+      Update-AzTag -ResourceId $rg_id -Tag $tags -Operation Merge
+
       foreach ( $resource in $all_resource_id ) {
-  
-        Update-AzTag -ResourceId $rg_id -Tag $tags -Operation Merge
-    
+
         Update-AzTag -ResourceId $resource -Tag $tags  -Operation Merge
+
       }
     }
 
@@ -231,11 +232,12 @@ function Set-AzTag {
 
       $all_resource_id = (Get-AzResource -ResourceGroupName $RG).ResourceId
 
+      Update-AzTag -ResourceId $rg_id -Tag $tags -Operation Merge
+
       foreach ( $resource in $all_resource_id ) {
-  
-        Update-AzTag -ResourceId $rg_id -Tag $tags -Operation Merge
-      
+
         Update-AzTag -ResourceId $resource -Tag $tags  -Operation Merge
+
       }
     }
   
