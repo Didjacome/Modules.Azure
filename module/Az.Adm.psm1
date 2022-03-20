@@ -244,4 +244,55 @@ function Set-AzTag {
   }   
 }
 
+
+<#
+ 	.SYNOPSIS
+      #################################################################################################################
+      #                              Criador: Diogo De Santana Jacome                                                 #
+      #                              Empresa:  Solo Network                                                           #
+      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                                                                                                               #
+      #                                                                                                               #
+      #                                          Versão: 1.0                                                          #
+      #                                                                                                               #
+      #                                                                                                               #
+      #################################################################################################################   
+      Convert-CsvToHashtable is an advanced function that converts CSV to HashTable
+    
+    .DESCRIPTION
+      Convert-CsvToHashtable is an advanced function that converts CSV to HashTable
+    
+    .EXAMPLE
+      C:\PS> Convert-CsvTohashtable -Path .\variavel.csv
+				
+		.LINK 
+      https://github.com/Didjacome
+
+	
+        
+#>
+
+
+
+function Convert-CsvTohashtable{
+  param (
+    # Parameter help description
+    [Parameter(Mandatory)]
+    [System.String]
+    $Path
+  )
+
+  process {
+
+    $csv = Import-Csv $Path -UseCulture
+    $headers = $csv[0].psobject.properties.name
+    $key = $headers[0]
+    $value = $headers[1]
+    $hashTable = @{}
+    $csv | ForEach-Object { $hashTable[$_."$key"] = $_."$value" }
+    return $hashTable
+
+  }
+}
+
  
