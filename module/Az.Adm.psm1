@@ -65,67 +65,122 @@ function  Get-AzADGroupRBAC {
       $Validar_Import = Test-Path $Import -ErrorAction SilentlyContinue -WarningAction SilentlyContinue
       
       if ( $Validar_Import -eq $true) {
- 
-        $var1 = Import-Csv $Import -UseCulture | Select-Object -ExpandProperty DisplayName
+        
 
-        foreach ($var2 in $var1) {   
- 
-          $RoleGroup = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
-     
-          $ScopeRBAC = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
-       
-          $GroupAssignment = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
-     
-          $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName 
-     
-          foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object DisplayName, @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }
-     
+        function matrizContar ($inicio, $final, $de, $var2) {
+          $contagem = $inicio 
+          while ($contagem -le $final) {
+            $RoleGroup = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).RoleDefinitionName[$contagem] 
+          
+            $ScopeRBAC = (Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).Scope[$contagem]
+      
+            $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).DisplayName[$contagem]
+      
+            $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName             
+            foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+            $contagem += $de            
+          }
+        }
+
+        $i = 0
+        $p = 1
+        $rep = (Import-Csv $Import -UseCulture | Select-Object DisplayName | Sort-Object DisplayName | Get-Unique -AsString).DisplayName
+
+        foreach ($d in $rep) {
+          $countGp = (Get-Content $Import | Select-String -Pattern $d -CaseSensitive -SimpleMatch ).count ; $f = $countGp - 1 ;
+          matrizContar -inicio $i -final $f -de $p -var $d
         }
 
       }
       else {
-        Write-Host ' Csv import error
+        Write-Host [' Csv import error
    
-       Please go to ''https://github.com/Didjacome' 
+       Please go to ''https://github.com/Didjacome']  -ForegroundColor DarkRed
       }
 
     }
  
     if ( $PSCmdlet.ParameterSetName -eq 'Group' ) {
     
-      $ValidarGP = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $Group | Select-Object -ExpandProperty DisplayName 
-     
+      $ValidarGP = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $Group | Get-Unique -AsString ).DisplayName
+      
+      
       if ( $ValidarGP -like $Group ) {
      
-        $var1 = $Group
+        function matrizContar ($inicio, $final, $de, $var2) {
+          $contagem = $inicio 
+          while ($contagem -le $final) {
+            $RoleGroup = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).RoleDefinitionName[$contagem] 
+          
+            $ScopeRBAC = (Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).Scope[$contagem]
+      
+            $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).DisplayName[$contagem]
+      
+            $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName             
+            foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+            $contagem += $de            
+          }
+          
+        }
 
-        foreach ($var2 in $var1) {   
- 
-          $RoleGroup = Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2 | Select-Object -ExpandProperty RoleDefinitionName 
-     
-          $ScopeRBAC = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty Scope 
-       
-          $GroupAssignment = Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2  | Select-Object -ExpandProperty DisplayName
-     
-          $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName 
-     
-          foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object DisplayName, @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }
-     
+        $i = 0
+        $p = 1
+        $rep = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $Group | Get-Unique -AsString ).DisplayName
+
+        foreach ($d in $rep) {
+          $countGp = ((Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object DisplayName -Like $d).ObjectId).count ; $f = $countGp - 1 ;
+          matrizContar -inicio $i -final $f -de $p -var $d
         }
 
 
 
       }
+
       else {
-        Write-Host 'Group does not exist
+        
+        $validarGPId = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object ObjectId -Like $Group | Get-Unique -AsString ).ObjectId
+        if ($validarGPId -eq $Group) {
+       
+          function matrizContar ($inicio, $final, $de, $var2) {
+            $contagem = $inicio 
+            while ($contagem -le $final) {
+              $RoleGroup = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  ObjectId -EQ $var2).RoleDefinitionName[$contagem] 
+          
+              $ScopeRBAC = (Get-AzRoleAssignment -WarningAction SilentlyContinue   |  Where-Object ObjectType -EQ Group | Where-Object  ObjectId -EQ $var2).Scope[$contagem]
+      
+              $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  ObjectId -EQ $var2).DisplayName[$contagem]
+      
+              $name = Get-AzADGroupMember  -GroupObjectId $var2  | Select-Object -ExpandProperty DisplayName             
+              foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+              $contagem += $de            
+            }
+          
+          }
+          $i = 0
+          $p = 1
+          $rep = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object ObjectId -Like $Group | Get-Unique -AsString ).ObjectId
+
+          foreach ($d in $rep) {
+            $countGp = ((Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object ObjectId -Like $d).ObjectId).count ; $f = $countGp - 1 ;
+            matrizContar -inicio $i -final $f -de $p -var $d
+          }
+        }
+      
+
+
+        else {
+        Write-Host ['Group does not exist
  
-        Please go to ''https://github.com/Didjacome' 
+        Please go to ''https://github.com/Didjacome'] -ForegroundColor DarkRed
+        }
       }
+
     }
      
       
   }
 }
+
 
 
 
