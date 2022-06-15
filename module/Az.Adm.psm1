@@ -76,8 +76,8 @@ function  Get-AzADGroupRBAC {
       
             $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).DisplayName[$contagem]
       
-            $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName             
-            foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+            $Id = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty Id           
+            foreach ($ver in $id) { Get-AzADUser -ObjectId $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
             $contagem += $de            
           }
         }
@@ -116,8 +116,8 @@ function  Get-AzADGroupRBAC {
       
             $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  DisplayName -Like $var2).DisplayName[$contagem]
       
-            $name = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty DisplayName             
-            foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+            $id = Get-AzADGroupMember -GroupDisplayName $var2  | Select-Object -ExpandProperty Id             
+            foreach ($ver in $id) { Get-AzADUser -ObjectId $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
             $contagem += $de            
           }
           
@@ -150,8 +150,8 @@ function  Get-AzADGroupRBAC {
       
               $GroupAssignment = (Get-AzRoleAssignment -WarningAction SilentlyContinue  |  Where-Object ObjectType -EQ Group | Where-Object  ObjectId -EQ $var2).DisplayName[$contagem]
       
-              $name = Get-AzADGroupMember  -GroupObjectId $var2  | Select-Object -ExpandProperty DisplayName             
-              foreach ($ver in $name) { Get-AzADUser -DisplayName $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
+              $Id = Get-AzADGroupMember  -GroupObjectId $var2  | Select-Object -ExpandProperty Id             
+              foreach ($ver in $Id) { Get-AzADUser -ObjectId $ver | Select-Object  @{n = 'SignInName'; e = { $_.Mail } }, @{n = 'RoleDefinitionName'; e = { "$RoleGroup" } }, @{n = 'Scope'; e = { "$ScopeRBAC" } }, @{n = 'associated Group'; e = { "$GroupAssignment" } } }              
               $contagem += $de            
             }
           
