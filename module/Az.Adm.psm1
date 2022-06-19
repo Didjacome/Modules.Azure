@@ -350,4 +350,461 @@ function Convert-CsvTohashtable{
   }
 }
 
+<#
+ 	.SYNOPSIS
+      #################################################################################################################
+      #                              Criador: Diogo De Santana Jacome                                                 #
+      #                              Empresa:  Solo Network                                                           #
+      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                                                                                                               #
+      #                                                                                                               #
+      #                                          Versão: 1.0                                                          #
+      #                                                                                                               #
+      #                                                                                                               #
+      #################################################################################################################   
+      Get-AzGraphUserRbac is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, Azure subscription role, last login, user lock.
+    
+    .DESCRIPTION
+      Get-AzGraphUserRbac is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, Azure subscription role, last login, user lock.
+
+      You need a Service Principal that can access the graph API. API Permissions:
+      AuditLog.Read.All
+      Directory.Read.All
+      Group.Read.All
+      User.Read.All
+      UserAuthenticationMethod.Read.All
+
+
+      You need to have role Reader permission on Azure subscription and in Azure AD
+
+
+
+    
+    .EXAMPLE
+      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz
+				
+    .EXAMPLE
+      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz | export-csv report-security.csv
+    
+    .EXAMPLE
+      C:\PS> $User_Ext = (Get-AzADUser |  Where-Object UserPrincipalName  -Like '*#EXT#@*').UserPrincipalName
+      C:\PS> $User_Ext_ALL = $User_Ext.replace('#', '%23')
+      C:\PS> Foreach ( $Users in $User_Ext_ALL){
+             Get-AzGraphUserRbac -upn $Users -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz}
+
+		.LINK 
+      https://github.com/Didjacome
+
+	
+        
+#>
+
+
+function Get-AzGraphUserRbac {
+  param (
+    [string]$upn,
+    [String]$tenantdomain,
+    [string]$ClientSecret,
+    [string]$ClientID,
+    [string]$tenantid 
+  )
+  
+  [string]$select = 'select'
+  [string]$filter = 'filter'
+  [string]$cifrao = '$'
+  [string]$cf = $cifrao + $filter
+  [string]$cs = $cifrao + $select
+    
+  invoke-WebRequest -Uri "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv" -OutFile license.csv
+  $data = Import-Csv .\license.csv
+
+  class ReportsUsers {
+    [string]$name
+    [string]$email
+    [string]$MFADefault
+    [string]$MFAMethods
+    [string]$MFASmsEnabled
+    [string]$MFANumber
+    [string]$license
+    [string]$RoleADAssignedUser
+    [string]$RoleRbacName
+    [string]$RolesRbacScope
+    [string]$DN
+    [string]$AccoutCreate
+    [string]$UserLestlogin
+    [string]$AccountEnabled
+  }
+    
+  $ReportsUsersList = New-Object Collections.Generic.List[ReportsUsers]
+  
+  class LicenseAll {
+    [string]$LicenseNameAll
+  }
+  
+  $LicenseAllList = New-Object Collections.Generic.List[LicenseAll]
+
+  $loginURL = 'https://login.microsoftonline.com'
+  $resource = 'https://graph.microsoft.com'           # Microsoft Graph API resource URI
+
+  $body = @{grant_type = 'client_credentials'; resource = $resource; client_id = $ClientID; client_secret = $ClientSecret }
+  $oauth = Invoke-RestMethod -Method Post -Uri $loginURL/$tenantdomain/oauth2/token?api-version=1.0 -Body $body
+  if ($oauth.access_token -ne $null) {
+    $headerParams = @{'Authorization' = "$($oauth.token_type) $($oauth.access_token)" }
+
+    $MFA_url = "https://graph.microsoft.com/beta/reports/authenticationMethods/userRegistrationDetails?$cf=userPrincipalName eq '$upn'"
+    $mfa = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $MFA_url)
+
+    $MFASMS_URL = "https://graph.microsoft.com/beta/users/$upn/authentication/phoneMethods"
+    $SMS = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $MFASMS_url)
+
+
+    $User_url = "https://graph.microsoft.com/beta/users?$cf=userPrincipalName eq '$upn'" 
+    $User = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $User_url)
+
+    $Sing_url = "https://graph.microsoft.com/beta/users?$cf=userPrincipalName eq '$upn'&$cs=signInActivity" 
+    $Sing = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $Sing_url)
+
+
+    $license_url = "https://graph.microsoft.com/v1.0/users/$upn/licenseDetails"
+    $license = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $license_url)
+
+    $role_url = "https://graph.microsoft.com/beta/users/$upn/transitiveMemberOf/microsoft.graph.directoryRole?$cs=displayName"
+    $role = Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $role_url  -SkipHttpErrorCheck -SkipHeaderValidation
+
+  }
+  else {
+    Write-Host 'ERROR: No Access Token'
+  }
+
+  $mfajson = ($mfa.content | ConvertFrom-Json).value
+  $DefaultMFA = $mfajson.defaultMfaMethod
+
+  $countMFAMethods = ($mfajson.methodsRegistered).count
+  if($countMFAMethods -gt 1){
+    $MethodsRegist = $mfajson.methodsRegistered
+    function MethodsWords ($i, $f, $p) {
+      $start = $i
+      while ($start -le $f) {
+        $Words = $MethodsRegist[$start]
+        $Letters = $MethodsRegist[$start].Length
+        $new_words = $Words.Insert($Letters, ' | ')
+        $set_of_words += $new_words
+        $start += $p
+        
+      }
+      return $set_of_words
+    }
+
+    $initiation = 0
+    $end = $countMFAMethods - 1
+    $go = 1
+  
+    $MethodsMFA = MethodsWords -i $initiation -f $end -p $go
+  } else {
+    $MethodsMFA = $mfajson.methodsRegistered 
+  }
  
+
+  $Smsjson = ($SMS.content | ConvertFrom-Json).value
+  $Phone = $Smsjson.phoneNumber
+  if ($Smsjson.phoneNumber -ne $null) {
+    $MFASMS = $true
+  }
+  else { $MFASMS = $false }
+
+  if (($DefaultMFA -eq $null) -and ($MethodsMFA -eq $null) ) {
+    if ($MFASMS -eq $true) {
+      $DefaultMFA = 'OneWaySMS'
+      $MethodsMFA = 'OneWaySMS'
+    }
+  }
+
+  if (($DefaultMFA -eq 'none') -and ($MethodsMFA -eq $null) -and ($MFASMS -eq $false) ) {
+    $DefaultMFA = ''
+  }
+  
+  $Userjson = ($User.content | ConvertFrom-Json).value
+  $SignInName = $Userjson.userPrincipalName
+  $displayName =  $Userjson.displayName
+  $DateCreate = $Userjson.createdDateTime
+  $BlockCredential = $Userjson.accountEnabled
+  $DN = $Userjson.onPremisesDistinguishedName  
+
+  $Singjson = ($Sing.content | ConvertFrom-Json).value
+  $Lestlogin = $Singjson.signInActivity.lastSignInDateTime
+  
+  $licensejson = ($license.content | ConvertFrom-Json).value
+  If ($licensejson.skuId -ne $null) {
+    $licenseId = $licensejson.skuId
+    foreach ($licenseIds in $licenseId) {
+      $Popline = ' | ' 
+      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | get-unique
+      $licenseNames = $LicenseName + $Popline 
+
+      $LicenseAll = [LicenseAll]::new()
+      $LicenseAll.LicenseNameAll = $licenseNames
+      $LicenseAllList.add($LicenseAll)
+    }
+  }
+
+
+
+  $rolejson = ($role.content | ConvertFrom-Json).value
+  $AADRoleName = $rolejson.displayName
+
+  $SecuredPassword = ConvertTo-SecureString  $ClientSecret -AsPlainText -Force
+  $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $ClientID, $SecuredPassword
+  Connect-AzAccount -Credential $Credential -ServicePrincipal -TenantId $tenantid -WarningAction SilentlyContinue -ErrorAction Break | Out-Null
+
+  $UPNRbac = $upn.replace('%23', '#')
+  $RoleName = (Get-AzRoleAssignment -SignInName $UPNRbac  -WarningAction SilentlyContinue).RoleDefinitionName
+  $RoleScope = (Get-AzRoleAssignment -SignInName $UPNRbac -WarningAction SilentlyContinue).Scope
+
+  $ReportsUsers = [ReportsUsers]::new()
+  $ReportsUsers.name = $displayName
+  $ReportsUsers.email = $SignInName
+  $ReportsUsers.MFADefault = $DefaultMFA
+  $ReportsUsers.MFAMethods = $MethodsMFA 
+  $ReportsUsers.MFASmsEnabled = $MFASMS 
+  $ReportsUsers.MFANumber = $Phone 
+  $ReportsUsers.license = $LicenseAllList.LicenseNameAll
+  $ReportsUsers.RoleADAssignedUser = $AADRoleName 
+  $ReportsUsers.RoleRbacName = $RoleName
+  $ReportsUsers.RolesRbacScope = $RoleScope 
+  $ReportsUsers.DN = $DN
+  $ReportsUsers.AccoutCreate = $DateCreate
+  $ReportsUsers.UserLestlogin = $Lestlogin
+  $ReportsUsers.AccountEnabled = $BlockCredential
+  $ReportsUsersList.add($ReportsUsers)
+
+  return $ReportsUsersList
+}
+
+
+
+<#
+ 	.SYNOPSIS
+      #################################################################################################################
+      #                              Criador: Diogo De Santana Jacome                                                 #
+      #                              Empresa:  Solo Network                                                           #
+      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                                                                                                               #
+      #                                                                                                               #
+      #                                          Versão: 1.0                                                          #
+      #                                                                                                               #
+      #                                                                                                               #
+      #################################################################################################################   
+      Get-AzGraphUserRbac is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
+    
+    .DESCRIPTION
+      Get-AzGraphUser is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
+
+      You need a Service Principal that can access the graph API. API Permissions:
+      AuditLog.Read.All
+      Directory.Read.All
+      Group.Read.All
+      User.Read.All
+      UserAuthenticationMethod.Read.All
+
+
+      You need to have role Reader permission on Azure subscription and in Azure AD
+
+
+
+    
+    .EXAMPLE
+      C:\PS> Get-AzGraphUser -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz
+				
+    .EXAMPLE
+      C:\PS> Get-AzGraphUser -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz | export-csv report-security.csv
+    
+    .EXAMPLE
+      C:\PS> $Users_Ids_Dev = (Get-AzADGroupMember -GroupDisplayName GP-Dev).id
+      C:\PS> $Rbac_GP = Get-AzADGroupRBAC -Group GP-Dev
+      C:\PS> Foreach ( $Users in $Users_Ids_Dev){
+             $upn = (Get-AzADUser -ObjectId $Users).UserPrincipalName
+             $Users_Graph_All Get-AzGraphUser -upn $upn -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz}
+             $ListAll = ($Rbac_GP | Merge-Object $Users_Graph_All -On SignInName)
+             $ListAll | export-csv Security-GP-Dev.csv
+
+
+    .EXAMPLE
+      C:\PS> $User_Ext = (Get-AzADUser |  Where-Object UserPrincipalName  -Like '*#EXT#@*').UserPrincipalName
+      C:\PS> $User_Ext_ALL = $User_Ext.replace('#', '%23')
+      C:\PS> Foreach ( $Users in $User_Ext_ALL){
+             Get-AzGraphUser -upn $Users -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz}
+
+		.LINK 
+      https://github.com/Didjacome
+
+	
+        
+#>
+
+function Get-AzGraphUser {
+  param (
+    [string]$upn,
+    [String]$tenantdomain,
+    [string]$ClientSecret,
+    [string]$ClientID
+  )
+  
+  [string]$select = 'select'
+  [string]$filter = 'filter'
+  [string]$cifrao = '$'
+  [string]$cf = $cifrao + $filter
+  [string]$cs = $cifrao + $select
+    
+  invoke-WebRequest -Uri "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv" -OutFile license.csv
+  $data = Import-Csv .\license.csv
+
+
+  class ReportsUsers {
+    [string]$name
+    [string]$SignInName
+    [string]$MFADefault
+    [string]$MFAMethods
+    [string]$MFASmsEnabled
+    [string]$MFANumber
+    [string]$license
+    [string]$RoleADAssignedUser
+    [string]$DN
+    [string]$AccoutCreate
+    [string]$UserLestlogin
+    [string]$AccountEnabled
+  }
+    
+  $ReportsUsersList = New-Object Collections.Generic.List[ReportsUsers]
+  
+  class LicenseAll {
+    [string]$LicenseNameAll
+  }
+  
+  $LicenseAllList = New-Object Collections.Generic.List[LicenseAll]
+
+  $loginURL = 'https://login.microsoftonline.com'
+  $resource = 'https://graph.microsoft.com'           # Microsoft Graph API resource URI
+
+  $body = @{grant_type = 'client_credentials'; resource = $resource; client_id = $ClientID; client_secret = $ClientSecret }
+  $oauth = Invoke-RestMethod -Method Post -Uri $loginURL/$tenantdomain/oauth2/token?api-version=1.0 -Body $body
+  if ($oauth.access_token -ne $null) {
+    $headerParams = @{'Authorization' = "$($oauth.token_type) $($oauth.access_token)" }
+
+    $MFA_url = "https://graph.microsoft.com/beta/reports/authenticationMethods/userRegistrationDetails?$cf=userPrincipalName eq '$upn'"
+    $mfa = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $MFA_url)
+
+    $MFASMS_URL = "https://graph.microsoft.com/beta/users/$upn/authentication/phoneMethods"
+    $SMS = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $MFASMS_url)
+
+
+    $User_url = "https://graph.microsoft.com/beta/users?$cf=userPrincipalName eq '$upn'" 
+    $User = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $User_url)
+
+    $Sing_url = "https://graph.microsoft.com/beta/users?$cf=userPrincipalName eq '$upn'&$cs=signInActivity" 
+    $Sing = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $Sing_url)
+
+
+    $license_url = "https://graph.microsoft.com/v1.0/users/$upn/licenseDetails"
+    $license = (Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $license_url)
+
+    $role_url = "https://graph.microsoft.com/beta/users/$upn/transitiveMemberOf/microsoft.graph.directoryRole?$cs=displayName"
+    $role = Invoke-WebRequest -UseBasicParsing -Headers $headerParams -Uri $role_url  -SkipHttpErrorCheck -SkipHeaderValidation
+
+  }
+  else {
+    Write-Host 'ERROR: No Access Token'
+  }
+
+  $mfajson = ($mfa.content | ConvertFrom-Json).value
+  $DefaultMFA = $mfajson.defaultMfaMethod
+
+  $countMFAMethods = ($mfajson.methodsRegistered).count
+  if($countMFAMethods -gt 1){
+    $MethodsRegist = $mfajson.methodsRegistered
+    function MethodsWords ($i, $f, $p) {
+      $start = $i
+      while ($start -le $f) {
+        $Words = $MethodsRegist[$start]
+        $Letters = $MethodsRegist[$start].Length
+        $new_words = $Words.Insert($Letters, ' | ')
+        $set_of_words += $new_words
+        $start += $p
+        
+      }
+      return $set_of_words
+    }
+
+    $initiation = 0
+    $end = $countMFAMethods - 1
+    $go = 1
+  
+    $MethodsMFA = MethodsWords -i $initiation -f $end -p $go
+  } else {
+    $MethodsMFA = $mfajson.methodsRegistered 
+  }
+
+  $Smsjson = ($SMS.content | ConvertFrom-Json).value
+  $Phone = $Smsjson.phoneNumber
+  if ($Smsjson.phoneNumber -ne $null) {
+    $MFASMS = $true
+  }
+  else { $MFASMS = $false }
+
+  if (($DefaultMFA -eq $null) -and ($MethodsMFA -eq $null) ) {
+    if ($MFASMS -eq $true) {
+      $DefaultMFA = 'OneWaySMS'
+      $MethodsMFA = 'OneWaySMS'
+    }
+  }
+
+  if (($DefaultMFA -eq 'none') -and ($MethodsMFA -eq $null) -and ($MFASMS -eq $false) ) {
+    $DefaultMFA = ''
+  }
+  
+  $Userjson = ($User.content | ConvertFrom-Json).value
+  $displayName =  $Userjson.displayName
+  $SignName = $Userjson.mail 
+  $SignNameValidate = $SignName.Replace('#EXT#@sotreqcloud.onmicrosoft.com','').Replace('_','@')
+  $DateCreate = $Userjson.createdDateTime
+  $BlockCredential = $Userjson.accountEnabled
+  $DN = $Userjson.onPremisesDistinguishedName  
+
+  $Singjson = ($Sing.content | ConvertFrom-Json).value
+  $Lestlogin = $Singjson.signInActivity.lastSignInDateTime
+  
+  $licensejson = ($license.content | ConvertFrom-Json).value
+  If ($licensejson.skuId -ne $null) {
+    $licenseId = $licensejson.skuId
+    foreach ($licenseIds in $licenseId) {
+      $Popline = ' | ' 
+      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | get-unique
+      $licenseNames = $LicenseName + $Popline 
+
+      $LicenseAll = [LicenseAll]::new()
+      $LicenseAll.LicenseNameAll = $licenseNames
+      $LicenseAllList.add($LicenseAll)
+    }
+  }
+
+  $rolejson = ($role.content | ConvertFrom-Json).value
+  $AADRoleName = $rolejson.displayName
+
+
+
+  $ReportsUsers = [ReportsUsers]::new()
+  $ReportsUsers.name = $displayName
+  $ReportsUsers.SignInName = $SignNameValidate
+  $ReportsUsers.MFADefault = $DefaultMFA
+  $ReportsUsers.MFAMethods = $MethodsMFA 
+  $ReportsUsers.MFASmsEnabled = $MFASMS 
+  $ReportsUsers.MFANumber = $Phone 
+  $ReportsUsers.license = $LicenseAllList.LicenseNameAll
+  $ReportsUsers.RoleADAssignedUser = $AADRoleName 
+  $ReportsUsers.DN = $DN
+  $ReportsUsers.AccoutCreate = $DateCreate
+  $ReportsUsers.UserLestlogin = $Lestlogin
+  $ReportsUsers.AccountEnabled = $BlockCredential
+  $ReportsUsersList.add($ReportsUsers)
+
+  return $ReportsUsersList
+}
