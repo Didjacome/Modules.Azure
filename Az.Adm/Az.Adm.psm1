@@ -1,9 +1,9 @@
 <#
  	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                                                                                                               #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
       #                                          Versão: 1.0                                                          #
@@ -187,9 +187,9 @@ function  Get-AzADGroupRBAC {
 <#
  	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                                                                                                               #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
       #                                          Versão: 1.0                                                          #
@@ -303,15 +303,15 @@ function Set-AzTag {
 <#
  	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                                                                                                               #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
       #                                          Versão: 1.0                                                          #
       #                                                                                                               #
       #                                                                                                               #
-      #################################################################################################################   
+      #################################################################################################################    
       Convert-CsvToHashtable is an advanced function that converts CSV to HashTable
     
     .DESCRIPTION
@@ -353,10 +353,9 @@ function Convert-CsvTohashtable{
 <#
  	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Apoio:   Luan Victor Cordeiro Levandoski                                         #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                              Co-creator:   Luan Victor Cordeiro Levandoski                                    #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
       #                                          Versão: 1.0                                                          #
@@ -403,11 +402,16 @@ function Convert-CsvTohashtable{
 
 function Get-AzGraphUserRbac {
   param (
+    [Parameter(Mandatory)]
     [string]$upn,
+    [Parameter(Mandatory)]
     [String]$tenantdomain,
+    [Parameter(Mandatory)]
     [string]$ClientSecret,
+    [Parameter(Mandatory)]
     [string]$ClientID,
-    [string]$tenantid 
+    [Parameter(Mandatory)]
+    [string]$tenantid  
   )
   
   [string]$select = 'select'
@@ -416,8 +420,14 @@ function Get-AzGraphUserRbac {
   [string]$cf = $cifrao + $filter
   [string]$cs = $cifrao + $select
     
-  invoke-WebRequest -Uri "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv" -OutFile license.csv
-  $data = Import-Csv .\license.csv
+  $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
+  $File_CSV_License = "license.csv"
+  if (Test-Path $File_CSV_License -eq $false) {
+    invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
+    $data = Import-Csv $File_CSV_License
+  }else {
+    $data = Import-Csv $File_CSV_License
+  }
 
   class ReportsUsers {
     [string]$name
@@ -586,16 +596,15 @@ function Get-AzGraphUserRbac {
 <#
  	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Apoio:   Luan Victor Cordeiro Levandoski                                         #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                              Co-creator:   Luan Victor Cordeiro Levandoski                                    #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
       #                                          Versão: 1.0                                                          #
       #                                                                                                               #
       #                                                                                                               #
-      #################################################################################################################    
+      #################################################################################################################     
       Get-AzGraphUser is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
     
     .DESCRIPTION
@@ -645,9 +654,13 @@ function Get-AzGraphUserRbac {
 
 function Get-AzGraphUser {
   param (
+    [Parameter(Mandatory)]
     [string]$upn,
+    [Parameter(Mandatory)]
     [String]$tenantdomain,
+    [Parameter(Mandatory)]
     [string]$ClientSecret,
+    [Parameter(Mandatory)]
     [string]$ClientID
   )
   
@@ -657,8 +670,14 @@ function Get-AzGraphUser {
   [string]$cf = $cifrao + $filter
   [string]$cs = $cifrao + $select
     
-  invoke-WebRequest -Uri "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv" -OutFile license.csv
-  $data = Import-Csv .\license.csv
+  $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
+  $File_CSV_License = "license.csv"
+  if (Test-Path $File_CSV_License -eq $false) {
+    invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
+    $data = Import-Csv $File_CSV_License
+  }else {
+    $data = Import-Csv $File_CSV_License
+  }
 
 
   class ReportsUsers {
