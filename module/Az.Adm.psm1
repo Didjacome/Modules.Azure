@@ -354,6 +354,7 @@ function Convert-CsvTohashtable{
  	.SYNOPSIS
       #################################################################################################################
       #                              Criador: Diogo De Santana Jacome                                                 #
+      #                              Apoio:   Luan Victor Cordeiro Levandoski                                         #
       #                              Empresa:  Solo Network                                                           #
       #                              Modifcado por: Diogo De Santana Jacome                                           #
       #                                                                                                               #
@@ -586,6 +587,7 @@ function Get-AzGraphUserRbac {
  	.SYNOPSIS
       #################################################################################################################
       #                              Criador: Diogo De Santana Jacome                                                 #
+      #                              Apoio:   Luan Victor Cordeiro Levandoski                                         #
       #                              Empresa:  Solo Network                                                           #
       #                              Modifcado por: Diogo De Santana Jacome                                           #
       #                                                                                                               #
@@ -593,7 +595,7 @@ function Get-AzGraphUserRbac {
       #                                          Versão: 1.0                                                          #
       #                                                                                                               #
       #                                                                                                               #
-      #################################################################################################################   
+      #################################################################################################################    
       Get-AzGraphUserRbac is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
     
     .DESCRIPTION
