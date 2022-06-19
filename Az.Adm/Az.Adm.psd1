@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = '.\Az.Adm.psm1'
+RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.0.0'
@@ -51,8 +51,7 @@ PowerShellVersion = '7.2.2'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'Az.Resources'; ModuleVersion = '5.1.0';}, 
-                    @{ModuleName = 'Az.Accounts'; ModuleVersion = '2.6.2';})
+RequiredModules = @(@{ModuleName = 'Az.Resources'; ModuleVersion = '5.1.0';}, @{ModuleName = 'Az.Accounts'; ModuleVersion = '2.6.2';})
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -73,7 +72,7 @@ RequiredModules = @(@{ModuleName = 'Az.Resources'; ModuleVersion = '5.1.0';},
 FunctionsToExport = '.\Az.Adm\Az.Adm.psm1'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-#CmdletsToExport = '*'
+CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser")
 
 # Variables to export from this module
 #VariablesToExport = '*'
@@ -96,7 +95,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'adm'
+        Tags = 'Adm', 'Powershell', "Azure", "Management", "Accounts", "Rbac"
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/Didjacome/Modules.Azure/blob/main/License'
@@ -108,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = '* Updated dependencies'
 
         # Prerelease string of this module
         # Prerelease = ''
@@ -117,7 +116,7 @@ PrivateData = @{
         # RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
-        # ExternalModuleDependencies = @()
+        ExternalModuleDependencies = @('Az.Resources', 'Az.Accounts')
 
     } # End of PSData hashtable
 

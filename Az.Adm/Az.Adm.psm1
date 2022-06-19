@@ -596,7 +596,7 @@ function Get-AzGraphUserRbac {
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################    
-      Get-AzGraphUserRbac is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
+      Get-AzGraphUser is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
     
     .DESCRIPTION
       Get-AzGraphUser is an advanced function that can be used to verify all users, MFA, MS 365 license, Azure AD role, last login, user lock.
