@@ -422,7 +422,7 @@ function Get-AzGraphUserRbac {
     
   $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
   $File_CSV_License = "license.csv"
-  if (Test-Path $File_CSV_License -eq $false) {
+  if ((Test-Path $File_CSV_License) -eq $false) {
     invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
     $data = Import-Csv $File_CSV_License
   }else {
@@ -672,7 +672,7 @@ function Get-AzGraphUser {
     
   $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
   $File_CSV_License = "license.csv"
-  if (Test-Path $File_CSV_License -eq $false) {
+  if ((Test-Path $File_CSV_License) -eq $false) {
     invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
     $data = Import-Csv $File_CSV_License
   }else {
