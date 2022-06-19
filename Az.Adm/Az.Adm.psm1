@@ -626,8 +626,8 @@ function Get-AzGraphUserRbac {
       C:\PS> Foreach ( $Users in $Users_Ids_Dev){
              $upn = (Get-AzADUser -ObjectId $Users).UserPrincipalName
              $Users_Graph_All Get-AzGraphUser -upn $upn -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz}
-             $ListAll = ($Rbac_GP | Merge-Object $Users_Graph_All -On SignInName)
-             $ListAll | export-csv Security-GP-Dev.csv
+      C:\PS> $ListAll = ($Rbac_GP | Merge-Object $Users_Graph_All -On SignInName)
+      C:\PS> $ListAll | export-csv Security-GP-Dev.csv
 
 
     .EXAMPLE
