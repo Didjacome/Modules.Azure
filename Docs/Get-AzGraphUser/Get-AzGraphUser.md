@@ -16,7 +16,8 @@ Get-AzGraphUser -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicros
 ```
 <br>
 
-![image](https://user-images.githubusercontent.com/83463639/158490268-47d96c7e-2123-476f-b758-e17f1cdf968b.png)
+![image](https://user-images.githubusercontent.com/83463639/175077998-56748667-8094-43c9-9916-86a260d0655e.png)
+
 
 <br>
 
@@ -41,10 +42,7 @@ Run the AssessmentSecurity.ps1 script
 
 output:
 
-![image](https://user-images.githubusercontent.com/83463639/158035768-0b4dce52-bf0b-49ab-90e3-4e31ac00bd9c.png)
-
-
-![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
+![image](https://user-images.githubusercontent.com/83463639/175078337-82f92e7c-e1b7-4ed9-a456-f0385923ea7b.png)
 
 
 
