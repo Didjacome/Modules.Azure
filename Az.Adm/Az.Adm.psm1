@@ -27,6 +27,9 @@
 				
     .EXAMPLE
       C:\PS> Get-AzADGroupRBAC -Group GP-Ower
+
+    .EXAMPLE
+      C:\PS> Get-AzADGroupRBAC -Group xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     
     .EXAMPLE
       C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv |  Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
