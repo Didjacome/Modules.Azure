@@ -6,7 +6,7 @@
       #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
@@ -29,14 +29,13 @@
       C:\PS> Get-AzADGroupRBAC -Group GP-Ower
     
     .EXAMPLE
-      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv | export-csv Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
+      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv |  Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
 		.LINK 
       https://github.com/Didjacome
 
 	
         
 #>
-
 function  Get-AzADGroupRBAC {
 
   [CmdletBinding(DefaultParameterSetName = 'Group')]
@@ -183,7 +182,6 @@ function  Get-AzADGroupRBAC {
 
 
 
-
 <#
  	.SYNOPSIS
       #################################################################################################################
@@ -192,7 +190,7 @@ function  Get-AzADGroupRBAC {
       #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
@@ -218,7 +216,6 @@ function  Get-AzADGroupRBAC {
 	
         
 #>
-
 function Set-AzTag {
 
 
@@ -300,6 +297,7 @@ function Set-AzTag {
 }
 
 
+
 <#
  	.SYNOPSIS
       #################################################################################################################
@@ -308,7 +306,7 @@ function Set-AzTag {
       #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################    
@@ -326,9 +324,6 @@ function Set-AzTag {
 	
         
 #>
-
-
-
 function Convert-CsvTohashtable{
   param (
     # Parameter help description
@@ -350,15 +345,17 @@ function Convert-CsvTohashtable{
   }
 }
 
+
+
 <#
  	.SYNOPSIS
       #################################################################################################################
       #                              Created by: Diogo De Santana Jacome                                              #
-      #                              Co-creator:   Luan Victor Cordeiro Levandoski                                    #
+      #                              Co-creator: Luan Victor Cordeiro Levandoski                                      #
       #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
@@ -376,6 +373,10 @@ function Convert-CsvTohashtable{
 
 
       You need to have role Reader permission on Azure subscription and in Azure AD
+
+      This function will download a CSV spreadsheet about the Microsoft Upgraded license
+
+      Licensing-service-plan-reference: https://docs.microsoft.com/En-us/azure/active-directory/enterprise-users/licensing-service-plan-reference
 
 
 
@@ -398,8 +399,6 @@ function Convert-CsvTohashtable{
 	
         
 #>
-
-
 function Get-AzGraphUserRbac {
   param (
     [Parameter(Mandatory)]
@@ -597,11 +596,11 @@ function Get-AzGraphUserRbac {
  	.SYNOPSIS
       #################################################################################################################
       #                              Created by: Diogo De Santana Jacome                                              #
-      #                              Co-creator:   Luan Victor Cordeiro Levandoski                                    #
+      #                              Co-creator: Luan Victor Cordeiro Levandoski                                      #
       #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################     
@@ -619,6 +618,9 @@ function Get-AzGraphUserRbac {
 
 
       You need to have role Reader permission on Azure subscription and in Azure AD
+
+      This function will download a CSV spreadsheet about the Microsoft Upgraded license
+      Licensing-service-plan-reference: https://docs.microsoft.com/En-us/azure/active-directory/enterprise-users/licensing-service-plan-reference
 
 
 
@@ -651,7 +653,6 @@ function Get-AzGraphUserRbac {
 	
         
 #>
-
 function Get-AzGraphUser {
   param (
     [Parameter(Mandatory)]
@@ -828,4 +829,656 @@ function Get-AzGraphUser {
   $ReportsUsersList.add($ReportsUsers)
 
   return $ReportsUsersList
+}
+
+
+<#
+ 	.SYNOPSIS
+   #################################################################################################################
+   #                              Created by: Diogo De Santana Jacome                                              #
+   #                                                                                                               #
+   #                              Modified by: Diogo De Santana Jacome                                             #
+   #                                                                                                               #
+   #                                                                                                               #
+   #                                          Version: 1.0                                                         #
+   #                                                                                                               #
+   #                                                                                                               #
+   #################################################################################################################   
+   New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
+ 
+ .DESCRIPTION
+   New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
+   You need to have role Contibuitor in Subscription Azure
+    
+  
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 
+     
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
+   
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskOs -ComputerName SQLSERVER  -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
+ 
+ .EXAMPLE
+   C:\PS> $VM = (import-csv VirtualMachines.csv).Name
+   C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskOs -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
+
+ .LINK 
+   https://github.com/Didjacome
+
+
+     
+#>
+function New-AzSnapshotDiskOs {
+  [CmdletBinding(DefaultParameterSetName = 'VmName')]
+  param (
+    [Parameter(Mandatory, ParameterSetName = 'VmName')]
+    [System.String]
+    $VmName,
+    [Parameter(Position = 0,
+      Mandatory, ValueFromPipelineByPropertyName,
+      ValueFromPipeline, ParameterSetName = 'ComputerName')]
+    [System.String]
+    $ComputerName,
+    [string]$SnapshotName,
+    [string]$ResourceGroupName,
+    [Hashtable]$Tag
+
+
+  )
+
+  process {
+
+    Write-Verbose "ParameterSetName is '$($PSCmdlet.ParameterSetName)'"
+
+    if ($PSCmdlet.ParameterSetName -eq 'VmName') {
+      $Vms = Get-AzVM | Where-Object Name -EQ $VmName
+     
+      if ($SnapshotName -eq '') {
+        $Name = $Vms.Name
+        $SnapshotName = $Name + '-OS'
+        if ((Get-AzSnapshot -Name $SnapshotName).ProvisioningState -eq 'Succeeded') {
+          $IdDisk = $Vms.StorageProfile.OsDisk.ManagedDisk.id
+          $countNames = (Search-AzGraph -Query "Resources| where type == 'microsoft.compute/snapshots'  | where properties.provisioningState == 'Succeeded' and  properties.creationData.sourceResourceId == '$IdDisk'| project name").Count
+          $nameSnaps = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/snapshots'  | where name == '$SnapshotName' and  properties.provisioningState == 'Succeeded'").name
+          $SnapshotName = $nameSnaps + '-' + $countNames
+        }
+      }
+
+      if ($ResourceGroupName -eq '') {
+        $ResourceGroupName = $vms.ResourceGroupName
+      }
+
+      $Location = $Vms.Location      
+      $OsDiskId = $Vms.StorageProfile.OsDisk.ManagedDisk.id
+
+
+      if ($Tag -eq $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $OsDiskId -Location $Location -CreateOption copy
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName -ResourceGroupName $ResourceGroupName
+      }
+
+      if ($Tag -ne $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $OsDiskId -Location $Location -CreateOption copy -Tag $Tag
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName -ResourceGroupName $ResourceGroupName
+      }
+    }
+
+    if ($PSCmdlet.ParameterSetName -eq 'ComputerName') {
+      $CheckVmId_OsProfile = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.osProfile.computerName  == '$ComputerName'").id
+      $CheckVmId_InstanceView = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.extended.instanceView.computerName   == '$ComputerName'").id
+
+      If ($CheckVmId_OsProfile -eq $null) {
+        if ($CheckVmId_InstanceView -eq $null) {
+          Write-Error 'The computername does not exist, check that the name is correct. Case sensitive. If the problem persists utlize VMname with flag -VmName.';
+          exit 1;
+        }
+        else {
+          $Vms = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.extended.instanceView.computerName   == '$ComputerName'")
+        }    
+      }
+      else {
+        $Vms = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.osProfile.computerName  == '$ComputerName'")
+      }
+      
+     
+      if ($SnapshotName -eq '') {
+        $Name = $Vms.Name
+        $SnapshotName = $Name + '-OS'
+        if ((Search-AzGraph -Query "Resources | where type == 'microsoft.compute/snapshots'  | where name == '$SnapshotName' and  properties.provisioningState == 'Succeeded'").properties.provisioningState -eq 'Succeeded') {
+          $IdDisk = $vms.properties.storageProfile.osDisk.managedDisk.id
+          $countNames = (Search-AzGraph -Query "Resources| where type == 'microsoft.compute/snapshots'  | where properties.provisioningState == 'Succeeded' and  properties.creationData.sourceResourceId == '$IdDisk'| project name").Count
+          $nameSnaps = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/snapshots'  | where name == '$SnapshotName' and  properties.provisioningState == 'Succeeded'").name
+          $SnapshotName = $nameSnaps + '-' + $countNames
+        }
+      }
+
+      if ($ResourceGroupName -eq '') {
+        $ResourceGroupName = $vms.ResourceGroup
+      }
+
+      $Location = $vms.Location      
+      $OsDiskId = $vms.properties.storageProfile.osDisk.managedDisk.id
+
+      if ($Tag -eq $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $OsDiskId -Location $Location -CreateOption copy
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName -ResourceGroupName $ResourceGroupName
+      }
+
+      if ($Tag -ne $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $OsDiskId -Location $Location -CreateOption copy -Tag $Tag
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName -ResourceGroupName $ResourceGroupName
+      }
+    }
+  }
+}
+  
+
+
+<#
+ 	.SYNOPSIS
+   #################################################################################################################
+   #                              Created by: Diogo De Santana Jacome                                              #
+   #                                                                                                               #
+   #                              Modified by: Diogo De Santana Jacome                                             #
+   #                                                                                                               #
+   #                                                                                                               #
+   #                                          version: 1.0                                                         #
+   #                                                                                                               #
+   #                                                                                                               #
+   #################################################################################################################   
+   New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
+ 
+ .DESCRIPTION
+   New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
+   You need to have role Contibuitor in Subscription Azure
+
+   Important:
+    Not recommended for Azure shared disks
+
+
+
+ 
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 
+     
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots
+   
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDiskAll -ComputerName SQLSERVER  -SnapshotName Snap -ResourceGroupName RG-Snapshots
+ 
+ .EXAMPLE
+   C:\PS> $VM = (import-csv VirtualMachines.csv).Name
+   C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskAll -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
+
+ .LINK 
+   https://github.com/Didjacome
+
+
+     
+#>
+function  New-AzSnapshotDiskAll {
+  [CmdletBinding(DefaultParameterSetName = 'VmName')]
+  param (
+    [Parameter(Mandatory, ParameterSetName = 'VmName')]
+    [System.String]
+    $VmName,
+    [Parameter(Position = 0,
+      Mandatory, ValueFromPipelineByPropertyName,
+      ValueFromPipeline, ParameterSetName = 'ComputerName')]
+    [System.String]
+    $ComputerName,
+    [string]$SnapshotName,
+    [string]$ResourceGroupName,
+    [Hashtable]$Tag
+  )
+
+  process {
+
+    Write-Verbose "ParameterSetName is '$($PSCmdlet.ParameterSetName)'"
+    if ($PSCmdlet.ParameterSetName -eq 'VmName') {
+      $Vms = Get-AzVM | Where-Object Name -EQ $VmName
+      $IdVms = $Vms.id
+      $DiskAll = Get-AzDisk | Where-Object ManagedBy -EQ $IdVms | Select-Object Name, id, OsType
+      $Location = $Vms.Location 
+
+      if ($SnapshotName -eq '') {
+        $VmName = $Vms.Name
+        $CountDiskDatas = ($diskall | Where-Object OsType -EQ $null).count
+        class disknames {
+          [string]$name
+        }
+        
+        $disknamesAllList = New-Object Collections.Generic.List[disknames]
+
+        function DiskNamesSum ($i, $f, $p) {
+          $start = $i
+          while ($start -le $f) {
+            $NameSnapshot = $VmName + '-Data' + '-' + $start
+            $disknames = [disknames]::new()
+            $disknames.name = $NameSnapshot 
+            $disknamesAllList.add($disknames)
+            $start += $p
+          }      
+          return $disknamesAllList
+        }
+
+        $initiation = 0 
+        $go = 1
+        $end = $CountDiskDatas - 1
+
+        DiskNamesSum -i $initiation -f $end -p $go
+       
+        $SnapshotNameDisk = $disknamesAllList.name
+
+        $DataDiskAllId = ($diskall | Where-Object OsType -EQ $null).id
+
+        if ($ResourceGroupName -eq '') {
+          $ResourceGroupName = $vms.ResourceGroupName
+        }
+  
+        if ($tag -eq $null) {
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -VmName $VmName
+        }
+        
+        if ($Tag -ne $null) {
+          function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag
+
+        }
+      }
+
+    
+
+      if ($SnapshotName -ne '') {
+        $CountDiskDatas = ($diskall | Where-Object OsType -EQ $null).count
+        
+        class NamesDisk {
+          [string]$name
+        }
+        
+        $NamesDiskAllList = New-Object Collections.Generic.List[namesDisk]
+
+        function DiskNamesSum ($i, $f, $p) {
+          $start = $i
+          while ($start -le $f) {
+            $NameSnapshot = $SnapshotName + '-Data' + '-' + $start
+            $NamesDisk = [NamesDisk]::new()
+            $NamesDisk.name = $NameSnapshot 
+            $NamesDiskAllList.add($NamesDisk)
+            $start += $p
+          }      
+          return $NamesDiskAllList
+        }
+
+        $initiation = 0 
+        $go = 1
+        $end = $CountDiskDatas - 1
+
+        DiskNamesSum -i $initiation -f $end -p $go
+       
+        $SnapshotNameDisk = $NamesDiskAllList.name
+
+        $DataDiskAllId = ($diskall | Where-Object OsType -EQ $null).id
+
+        if ($ResourceGroupName -eq '') {
+          $ResourceGroupName = $vms.ResourceGroupName
+        }
+  
+        if ($tag -eq $null) {
+          
+        
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -VmName $VmName
+        }
+        if ($tag -ne $null) {
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag
+        }
+        
+      }
+    }
+
+
+    if ($PSCmdlet.ParameterSetName -eq 'ComputerName') {
+
+      $CheckVmId_OsProfile = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.osProfile.computerName  == '$ComputerName'").id
+      $CheckVmId_InstanceView = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.extended.instanceView.computerName   == '$ComputerName'").id
+
+      If ($CheckVmId_OsProfile -eq $null) {
+        if ($CheckVmId_InstanceView -eq $null) {
+          Write-Error 'The computername does not exist, check that the name is correct. Case sensitive. If the problem persists utlize VMname with flag -VmName.';
+          exit 1;
+        }
+        else {
+          $Vms = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.extended.instanceView.computerName   == '$ComputerName'")
+        }    
+      }
+      else {
+        $Vms = (Search-AzGraph -Query "Resources | where type == 'microsoft.compute/virtualmachines' | where properties.osProfile.computerName  == '$ComputerName'")
+      }
+
+      $IdVms = $Vms.id
+      $DiskAll = Get-AzDisk | Where-Object ManagedBy -EQ $IdVms | Select-Object Name, id, OsType
+      $Location = $Vms.Location 
+
+
+
+
+      if ($SnapshotName -eq '') {
+        $VmName = $Vms.Name
+        $CountDiskDatas = ($diskall | Where-Object OsType -EQ $null).count
+        class Computernamesdisk {
+          [string]$name
+        }
+        
+        $Computernamesdisklist = New-Object Collections.Generic.List[Computernamesdisk]
+
+        function DiskNamesSum ($i, $f, $p) {
+          $start = $i
+          while ($start -le $f) {
+            $NameSnapshot = $VmName + '-Data' + '-' + $start
+            $Computernamesdisk = [Computernamesdisk]::new()
+            $Computernamesdisk.name = $NameSnapshot 
+            $Computernamesdisklist.add($Computernamesdisk)
+            $start += $p
+          }      
+          return $Computernamesdisklist
+        }
+
+        $initiation = 0 
+        $go = 1
+        $end = $CountDiskDatas - 1
+
+        DiskNamesSum -i $initiation -f $end -p $go
+       
+        $SnapshotNameDisk = $Computernamesdisklist.name
+
+        $DataDiskAllId = ($diskall | Where-Object OsType -EQ $null).id
+
+        if ($ResourceGroupName -eq '') {
+          $ResourceGroupName = $vms.ResourceGroup
+        }
+  
+        if ($tag -eq $null) {
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -ComputerName $ComputerName
+        }
+        
+        if ($Tag -ne $null) {
+          function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -ComputerName  $ComputerName -Tag $Tag
+
+        }
+      }
+
+
+
+
+
+      if ($SnapshotName -ne '') {
+        $VmName = $Vms.Name
+        $CountDiskDatas = ($diskall | Where-Object OsType -EQ $null).count
+        
+        class ComputerNameDiskNames {
+          [string]$name
+        }
+        
+        $ComputerNameDiskNamesAllList = New-Object Collections.Generic.List[ComputerNameDiskNames]
+
+        function DiskNamesSum ($i, $f, $p) {
+          $start = $i
+          while ($start -le $f) {
+            $NameSnapshot = $SnapshotName + '-Data' + '-' + $start
+            $ComputerNameDiskNames = [ComputerNameDiskNames]::new()
+            $ComputerNameDiskNames.name = $NameSnapshot 
+            $ComputerNameDiskNamesAllList.add($ComputerNameDiskNames)
+            $start += $p
+          }      
+          return $ComputerNameDiskNamesAllList
+        }
+
+        $initiation = 0 
+        $go = 1
+        $end = $CountDiskDatas - 1
+
+        DiskNamesSum -i $initiation -f $end -p $go
+       
+        $SnapshotNameDisk = $ComputerNameDiskNamesAllList.name
+
+        $DataDiskAllId = ($diskall | Where-Object OsType -EQ $null).id
+
+        if ($ResourceGroupName -eq '') {
+          $ResourceGroupName = $vms.ResourceGroup
+        }
+  
+        if ($tag -eq $null) {
+          
+        
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -ComputerName $ComputerName
+        }
+        if ($tag -ne $null) {
+          function SetSnapNameAndDiskId ($i, $f, $p) {
+            $start = $i
+            While ($start -le $f) {
+              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+              $start += $p
+            }
+          }
+          $numberloop = $DataDiskAllId.count
+          $initiation = 0 
+          $go = 1
+          $end = $numberloop - 1
+          SetSnapNameAndDiskId -i $initiation -f $end -p $go
+          New-AzSnapshotDiskOs -ComputerName $ComputerName -Tag $Tag
+        }
+        
+      }
+
+      
+    }
+
+  }
+}
+
+
+
+<#
+ 	.SYNOPSIS
+   #################################################################################################################
+   #                              Created by: Diogo De Santana Jacome                                              #
+   #                                                                                                               #
+   #                              Modified by: Diogo De Santana Jacome                                             #
+   #                                                                                                               #
+   #                                                                                                               #
+   #                                          Version: 1.0                                                         #
+   #                                                                                                               #
+   #                                                                                                               #
+   #################################################################################################################   
+   
+ 
+ .DESCRIPTION
+   New-SnapshotDisk is an advanced function that can be used to take snapshots of the virtual machine point manager disks in Azure.
+   You need to have role Contibuitor in Subscription Azure
+
+   Important:
+    Not recommended for Azure shared disks
+
+ 
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk
+     
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk -SnapshotName Snap -ResourceGroupName RG-Snapshots
+   
+ .EXAMPLE
+   C:\PS> New-AzSnapshotDisk -DiskId xxxxxx-xxxx-xxxxx-xxxx -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+
+ .LINK 
+   https://github.com/Didjacome
+
+
+     
+#>
+function New-AzSnapshotDisk {
+  [CmdletBinding(DefaultParameterSetName = 'DiskName')]
+
+  param (
+    [Parameter(Mandatory, ParameterSetName = 'DiskName')]
+    [string]$diskName,
+    [Parameter(Position = 0,
+      Mandatory, ValueFromPipelineByPropertyName,
+      ValueFromPipeline, ParameterSetName = 'diskId')] 
+    [string]$diskId,   
+    [string]$SnapshotName,
+    [string]$ResourceGroupName,
+    [Hashtable]$Tag
+  )
+
+  process {
+    Write-Verbose "ParameterSetName is '$($PSCmdlet.ParameterSetName)'"
+    if ($PSCmdlet.ParameterSetName -eq 'DiskName') {
+      $disk = Get-AzDisk -name $diskName
+      $id = $disk.id
+      $Location = $disk.location
+
+      if ($ResourceGroupName -eq '') {
+        $ResourceGroupName = $disk.ResourceGroupName
+      }
+
+      if ($SnapshotName -eq '') {
+        $SnapshotName = $diskName + 'Snap-01'
+      }
+
+      if ($Tag -eq $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $id -Location $Location -CreateOption copy
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName  -ResourceGroupName $ResourceGroupName | Out-Null
+      }
+
+      if ($Tag -ne $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $id -Location $Location -CreateOption copy -Tag $Tag
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName  -ResourceGroupName $ResourceGroupName | Out-Null
+      } 
+    }
+
+    if ($PSCmdlet.ParameterSetName -eq 'diskId') {
+      $disk = (Get-AzDisk  | Where-Object Id -EQ $diskId)
+      $id = $disk.id
+      $name = $disk.name
+      $Location = $disk.location
+
+      if ($ResourceGroupName -eq '') {
+        $ResourceGroupName = $disk.ResourceGroupName
+      }
+
+      if ($SnapshotName -eq '') {
+        $SnapshotName = $Name + 'Snap-01'
+      }
+
+      if ($Tag -eq $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $id -Location $Location -CreateOption copy
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName  -ResourceGroupName $ResourceGroupName | Out-Null
+      }
+
+      if ($Tag -ne $null) {
+        $SnapshotConfig = New-AzSnapshotConfig -SourceUri $id -Location $Location -CreateOption copy -Tag $Tag
+        New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotName  -ResourceGroupName $ResourceGroupName | Out-Null
+      } 
+    }
+  }
 }

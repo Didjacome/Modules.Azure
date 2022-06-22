@@ -12,7 +12,7 @@
 RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.4'
+ModuleVersion = '1.0.5'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,10 +69,10 @@ PowerShellVersion = '7.2.2'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser")
+FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDiskOs")
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser")
+CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDiskOs")
 
 # Variables to export from this module
 #VariablesToExport = '*'
@@ -95,7 +95,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'Adm', 'Powershell', "Azure", "Management", "Accounts", "Rbac"
+        Tags = 'Adm', 'Powershell', "Azure", "Management", "Accounts", "Rbac", "Snapshot", "Assessment", "Security", "Resource"
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/Didjacome/Modules.Azure/blob/main/License'
@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Get-AzGraphUser and Get-AzGraphUserRbac module bug settings'
+        ReleaseNotes = 'Add cmdlets to take Snapshos'
 
         # Prerelease string of this module
         # Prerelease = ''
@@ -116,14 +116,14 @@ PrivateData = @{
         # RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
-        ExternalModuleDependencies = @('Az.Resources', 'Az.Accounts')
+        ExternalModuleDependencies = @('Az.Resources', 'Az.Accounts', 'Az.ResourceGraph')
 
     } # End of PSData hashtable
 
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/Didjacome/Modules.Azure/tree/main/Readme.modules'
+HelpInfoURI = 'https://github.com/Didjacome/Modules.Azure/tree/main/Docs'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
