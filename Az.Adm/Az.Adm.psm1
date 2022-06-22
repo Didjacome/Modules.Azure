@@ -10,10 +10,10 @@
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
-      Get-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Get-AzAdGroupRrbac is an advanced function that can be used to check all users of groups that have RBAC permission
     
     .DESCRIPTION
-      Get-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Get-AzAdGroupRbac is an advanced function that can be used to check all users of groups that have RBAC permission
 
       You need to be connected to Azure subscription 
 
@@ -23,23 +23,23 @@
 
     
     .EXAMPLE
-      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv
+      C:\PS> Get-AzAdGroupRbac -Import .\AZAD_Groups.csv
 				
     .EXAMPLE
-      C:\PS> Get-AzADGroupRBAC -Group GP-Ower
+      C:\PS> Get-AzAdGroupRbac -Group GP-Ower
 
     .EXAMPLE
-      C:\PS> Get-AzADGroupRBAC -Group xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      C:\PS> Get-AzAdGroupRbac -Group xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     
     .EXAMPLE
-      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv |  Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
+      C:\PS> Get-AzAdGroupRbac -Import .\AZAD_Groups.csv |  Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
 		.LINK 
       https://github.com/Didjacome
 
 	
         
 #>
-function  Get-AzADGroupRBAC {
+function  Get-AzAdGroupRbac {
 
   [CmdletBinding(DefaultParameterSetName = 'Group')]
   
@@ -385,16 +385,16 @@ function Convert-CsvTohashtable{
 
     
     .EXAMPLE
-      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz
+      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz -tenantid xxxxx-xxxxx-xxxxxx-xxxxx
 				
     .EXAMPLE
-      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz | export-csv report-security.csv
+      C:\PS> Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz -tenantid xxxxx-xxxxx-xxxxxx-xxxxx | export-csv report-security.csv
     
     .EXAMPLE
       C:\PS> $User_Ext = (Get-AzADUser |  Where-Object UserPrincipalName  -Like '*#EXT#@*').UserPrincipalName
       C:\PS> $User_Ext_ALL = $User_Ext.replace('#', '%23')
       C:\PS> Foreach ( $Users in $User_Ext_ALL){
-             Get-AzGraphUserRbac -upn $Users -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz}
+             Get-AzGraphUserRbac -upn $Users -tenantdomain contoso.onmicrosoft.com -ClientID 00000000-0000-0000-0000-00000000 -ClientSecret 0000zzzz0000zzzz0000zzzz -tenantid xxxxx-xxxxx-xxxxxx-xxxxx}
 
 		.LINK 
       https://github.com/Didjacome
@@ -837,41 +837,41 @@ function Get-AzGraphUser {
 
 <#
  	.SYNOPSIS
-   #################################################################################################################
-   #                              Created by: Diogo De Santana Jacome                                              #
-   #                                                                                                               #
-   #                              Modified by: Diogo De Santana Jacome                                             #
-   #                                                                                                               #
-   #                                                                                                               #
-   #                                          Version: 1.0                                                         #
-   #                                                                                                               #
-   #                                                                                                               #
-   #################################################################################################################   
-   New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                                                                                                               #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          Version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
+     New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
  
- .DESCRIPTION
-   New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
-   You need to have role Contibuitor in Subscription Azure
+    .DESCRIPTION
+     New-AzSnapshotDiskOs is an advanced function that can be used to perform manager disk snapshots of Virtual Machine operating systems in Azure.
+     You need to have role Contibuitor in Subscription Azure
     
   
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 
      
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
    
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskOs -VmName VM-SQL-01 -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
 
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskOs -ComputerName SQLSERVER  -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskOs -ComputerName SQLSERVER  -SnapshotName Snap-VM-SQL-OS -ResourceGroupName RG-Snapshots
  
- .EXAMPLE
-   C:\PS> $VM = (import-csv VirtualMachines.csv).Name
-   C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskOs -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
+    .EXAMPLE
+     C:\PS> $VM = (import-csv VirtualMachines.csv).Name
+     C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskOs -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
 
- .LINK 
-   https://github.com/Didjacome
+    .LINK 
+     https://github.com/Didjacome
 
 
      
@@ -983,47 +983,47 @@ function New-AzSnapshotDiskOs {
 
 
 <#
- 	.SYNOPSIS
-   #################################################################################################################
-   #                              Created by: Diogo De Santana Jacome                                              #
-   #                                                                                                               #
-   #                              Modified by: Diogo De Santana Jacome                                             #
-   #                                                                                                               #
-   #                                                                                                               #
-   #                                          version: 1.0                                                         #
-   #                                                                                                               #
-   #                                                                                                               #
-   #################################################################################################################   
-   New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
+  .SYNOPSIS
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                                                                                                               #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
+     New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
  
- .DESCRIPTION
-   New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
-   You need to have role Contibuitor in Subscription Azure
+   .DESCRIPTION
+     New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
+     You need to have role Contibuitor in Subscription Azure
 
-   Important:
-    Not recommended for Azure shared disks
+     Important:
+     Not recommended for Azure shared disks
 
 
 
  
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 
      
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots
    
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskAll -VmName VM-SQL-01 -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
 
- .EXAMPLE
-   C:\PS> New-AzSnapshotDiskAll -ComputerName SQLSERVER  -SnapshotName Snap -ResourceGroupName RG-Snapshots
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDiskAll -ComputerName SQLSERVER  -SnapshotName Snap -ResourceGroupName RG-Snapshots
  
- .EXAMPLE
-   C:\PS> $VM = (import-csv VirtualMachines.csv).Name
-   C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskAll -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
+    .EXAMPLE
+     C:\PS> $VM = (import-csv VirtualMachines.csv).Name
+     C:\PS> Foreach ($VMS in $VM) {New-AzSnapshotDiskAll -VmName $VMS -Tag @{Issue="xxxxx";env="prd"}}
 
- .LINK 
-   https://github.com/Didjacome
+    .LINK 
+     https://github.com/Didjacome
 
 
      
@@ -1382,38 +1382,38 @@ function  New-AzSnapshotDiskAll {
 
 
 <#
- 	.SYNOPSIS
-   #################################################################################################################
-   #                              Created by: Diogo De Santana Jacome                                              #
-   #                                                                                                               #
-   #                              Modified by: Diogo De Santana Jacome                                             #
-   #                                                                                                               #
-   #                                                                                                               #
-   #                                          Version: 1.0                                                         #
-   #                                                                                                               #
-   #                                                                                                               #
-   #################################################################################################################   
+  .SYNOPSIS
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                                                                                                               #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          Version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
    
  
- .DESCRIPTION
-   New-SnapshotDisk is an advanced function that can be used to take snapshots of the virtual machine point manager disks in Azure.
-   You need to have role Contibuitor in Subscription Azure
+    .DESCRIPTION
+     New-SnapshotDisk is an advanced function that can be used to take snapshots of the virtual machine point manager disks in Azure.
+     You need to have role Contibuitor in Subscription Azure
 
-   Important:
-    Not recommended for Azure shared disks
+     Important:
+     Not recommended for Azure shared disks
 
  
- .EXAMPLE
-   C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk
      
- .EXAMPLE
-   C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk -SnapshotName Snap -ResourceGroupName RG-Snapshots
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk -SnapshotName Snap -ResourceGroupName RG-Snapshots
    
- .EXAMPLE
-   C:\PS> New-AzSnapshotDisk -DiskId xxxxxx-xxxx-xxxxx-xxxx -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskId xxxxxx-xxxx-xxxxx-xxxx -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
 
- .LINK 
-   https://github.com/Didjacome
+    .LINK 
+     https://github.com/Didjacome
 
 
      
