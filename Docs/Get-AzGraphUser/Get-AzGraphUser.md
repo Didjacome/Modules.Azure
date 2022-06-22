@@ -16,7 +16,7 @@ Get-AzGraphUser -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmicros
 ```
 <br>
 
-![image](https://user-images.githubusercontent.com/83463639/175077998-56748667-8094-43c9-9916-86a260d0655e.png)
+![image](https://user-images.githubusercontent.com/83463639/175081043-9613b8b0-45de-4e67-8761-7729811ca3a5.png)
 
 
 <br>
