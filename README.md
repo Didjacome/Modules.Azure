@@ -36,10 +36,10 @@ This module contains the cmdlets for security assessments, to help support teams
 |-------------|-----------|--------------|
 |`Get-AzADGroupRBAC` | [Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzAdGroupRbac/README_Get-AzADGroupRBAC.md) | Az.Resources, Az.Accounts|
 |`Get-AzGraphUser` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzGraphUser/Get-AzGraphUser.md) | Az.Resources, Az.Accounts|
-|`Get-AzGraphUserRbac` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzGraphUser/Get-AzGraphUserRbac.md) | Az.Resources, Az.Accounts, Az.Adm|
+|`Get-AzGraphUserRbac` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzGraphUserRbac/Get-AzGraphUserRbac.md) | Az.Resources, Az.Accounts, Az.Adm|
 |`New-AzSnapshotDisk` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDisk/New-AzSnapshotDisk.md) | Az.Resources, Az.Accounts, Az.ResourceGraph |
-|`New-AzSnapshotDiskAll` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDisk/New-AzSnapshotDiskAll.md) | Az.Resources, Az.Accounts, Az.ResourceGraph|
-|`New-AzSnapshotDiskOs` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDisk/New-AzSnapshotDiskOs.md) | Az.Resources, Az.Accounts, Az.ResourceGraph|
+|`New-AzSnapshotDiskAll` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskall/New-AzSnapshotDiskAll.md) | Az.Resources, Az.Accounts, Az.ResourceGraph|
+|`New-AzSnapshotDiskOs` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskOs/New-AzSnapshotDiskOs.md) | Az.Resources, Az.Accounts, Az.ResourceGraph|
 |`Set-AzTag` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Set-AzTag/README_Set-AzTag.md) |  Az.Resources, Az.Accounts|
 
 
