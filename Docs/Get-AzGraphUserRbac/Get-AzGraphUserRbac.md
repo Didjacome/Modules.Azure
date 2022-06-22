@@ -23,7 +23,7 @@ Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmi
 
 # Stage
 
-In the repository ![Assessment User](https://github.com/Didjacome/Modules.Azure/tree/main/scriptAssessment-SecurityUsers)  you will see an example script.
+In the repository ![Assessment User](https://github.com/Didjacome/Modules.Azure/tree/main/script/Assessment-SecurityUsers)  you will see an example script.
 <br>
 With this script you can get this result.
 
