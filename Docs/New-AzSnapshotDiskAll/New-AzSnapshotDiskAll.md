@@ -23,7 +23,7 @@ New-AzSnapshotDiskAll -VmName VM-SQL-01
 
 # Stage
 
-In the repository ![Assessment User](https://github.com/Didjacome/Modules.Azure/tree/main/Snapshot-All-VM)  you will see an example script.
+In the repository ![Snapshot All](https://github.com/Didjacome/Modules.Azure/tree/main/script/Snapshot-All-VM)  you will see an example script.
 <br>
 With this script you can get this result.
 
