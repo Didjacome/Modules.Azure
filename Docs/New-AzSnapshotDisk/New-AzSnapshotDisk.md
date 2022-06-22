@@ -1,4 +1,4 @@
-# Cmdlet "New-AzSnapshotDiskOS"
+# Cmdlet "New-AzSnapshotDisk"
 
 # Summary
 This cmdlet can be used to take snapshots of manager disks. <br>
