@@ -25,7 +25,7 @@ New-AzSnapshotDiskOS -diskName VM-SQL_OSdisk
 
 
       
-  .SYNOPSIS
+    .SYNOPSIS
      #################################################################################################################
      #                              Created by: Diogo De Santana Jacome                                              #
      #                                                                                                               #
@@ -44,6 +44,19 @@ New-AzSnapshotDiskOS -diskName VM-SQL_OSdisk
 
      Important:
      Not recommended for Azure shared disks
+
+ 
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk
+     
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskName VM-SQL_OSDisk -SnapshotName Snap -ResourceGroupName RG-Snapshots
+   
+    .EXAMPLE
+     C:\PS> New-AzSnapshotDisk -DiskId xxxxxx-xxxx-xxxxx-xxxx -SnapshotName Snap -ResourceGroupName RG-Snapshots  -Tag @{Issue="xxxxxx";env="prd"}
+
+    .LINK 
+     https://github.com/Didjacome
 
  
     .EXAMPLE
