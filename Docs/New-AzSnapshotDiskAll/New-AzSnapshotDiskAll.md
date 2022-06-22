@@ -16,7 +16,8 @@ New-AzSnapshotDiskAll -VmName VM-SQL-01
 ```
 <br>
 
-![image](https://user-images.githubusercontent.com/83463639/158490268-47d96c7e-2123-476f-b758-e17f1cdf968b.png)
+![image](https://user-images.githubusercontent.com/83463639/175087042-e4c56e51-c9b1-4f6d-950c-8101f3279e3c.png)
+
 
 <br>
 
@@ -41,10 +42,7 @@ Run the SnapshotDiskAll.ps1 script
 
 output:
 
-![image](https://user-images.githubusercontent.com/83463639/158035768-0b4dce52-bf0b-49ab-90e3-4e31ac00bd9c.png)
-
-
-![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
+![image](https://user-images.githubusercontent.com/83463639/175091736-af5a8ac9-4cf5-446c-a07c-903404debe62.png)
 
 
 
@@ -68,7 +66,7 @@ output:
      #################################################################################################################   
      New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
  
-   .DESCRIPTION
+    .DESCRIPTION
      New-AzSnapshotDiskAll is an advanced function that can be used to perform snapshots of all virtual machine manager disks in Azure.
      You need to have role Contibuitor in Subscription Azure
 
