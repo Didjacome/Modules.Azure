@@ -16,7 +16,8 @@ Get-AzGraphUserRbac -upn test@contoso.onmicrosoft.com -tenantdomain contoso.onmi
 ```
 <br>
 
-![image](https://user-images.githubusercontent.com/83463639/158490268-47d96c7e-2123-476f-b758-e17f1cdf968b.png)
+![image](https://user-images.githubusercontent.com/83463639/175081542-57bf81f7-f44c-4b5c-9d3c-92425776a954.png)
+
 
 <br>
 
@@ -41,11 +42,8 @@ Run the AssessmentSecurity.ps1 script
 
 output:
 
-![image](https://user-images.githubusercontent.com/83463639/158035768-0b4dce52-bf0b-49ab-90e3-4e31ac00bd9c.png)
 
-
-![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
-
+![image](https://user-images.githubusercontent.com/83463639/175081606-2a8f7ef1-3e5d-45ce-a44f-bb814b44b031.png)
 
 
 
