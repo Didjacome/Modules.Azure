@@ -1,14 +1,43 @@
-# Script GET-RBAC.ps1 and  module AZ.ADM "Get-AzADGroupRBAC"
+# Cmdlet "Get-AzADGroupRBAC"
 
 # Summary
-Export Rbac permissions at different levels in CSV
+Check all users from groups that have RBAC permission <br>
+You can export Rbac permissions at different levels in CSV
+
+# Basic Usage
+## Installation
+
+```powershell
+Install-Module -Name Az.Adm
+```
+## Validating the group
+```powershell
+Get-AzAdGroupRbac -Group Test
+```
+<br>
+
+![image](https://user-images.githubusercontent.com/83463639/158490268-47d96c7e-2123-476f-b758-e17f1cdf968b.png)
+
+<br>
 
 # Stage
+
+In the repository ![Assessment Rbac](https://github.com/Didjacome/Modules.Azure/tree/main/script/Assessment-Rbac)  you will see an example script.
+<br>
+With this script you can get this result.
+
+# Step on
+Connect in your subscription
+```powershell
+Connect-AzAccount 
+```
+
+
 Run the Role-RBAC.ps1 script
 
-Connect-AzAccount 
-
-.\Role-RBAC.ps1
+```powershell
+. .\Role-RBAC.ps1
+```
 
 output:
 
@@ -18,39 +47,29 @@ output:
 ![image](https://user-images.githubusercontent.com/83463639/158035479-132067c2-5002-4aa7-b78a-003ff53baf99.png)
 
 
-Import-Module .\Az.Adm.psm1
 
-Get-Module 
 
-output:
-
-![image](https://user-images.githubusercontent.com/83463639/158035514-8cb7173b-0b75-4000-a22c-ad432de755f6.png)
+# Help cmdlet
 
 
 
 
-Run the Get-AzADGroupRBAC function
-
-For csv import it needs to have a column called DisplayName
-
-<#
       
     .SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                                                                                                               #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
-      
-      GET-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Get-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
     
     .DESCRIPTION
-      GET-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
+      Get-AzADGroupRBAC is an advanced function that can be used to check all users of groups that have RBAC permission
 
       You need to be connected to Azure subscription 
 
@@ -60,19 +79,23 @@ For csv import it needs to have a column called DisplayName
 
     
     .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -import .\AZAD_Groups.csv
+      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv
 				
     .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -group GP-Ower
+      C:\PS> Get-AzADGroupRBAC -Group GP-Ower
+
+    .EXAMPLE
+      C:\PS> Get-AzADGroupRBAC -Group xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     
     .EXAMPLE
-      C:\PS> GET-AzADGroupRBAC -import .\AZAD_Groups.csv | export-csv Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
+      C:\PS> Get-AzADGroupRBAC -Import .\AZAD_Groups.csv |  Export-Csv C:\Users\$env:USERNAME\Documents\GroupUserAll.csv
 		.LINK 
-      https://github.com/Didjacome/GET-RBAC
+      https://github.com/Didjacome
+
 
 	
         
-#>
+
 
 
 

@@ -1,20 +1,20 @@
-# Set-AzTag
+# Cmdlet "Set-AzTag"
 
 # Summary
 Configure tags on all resources in a resource group
 
-# Stage
+# Basic Usage
+## Installation
 
-
-Import-Module .\Az.Adm.psm1
-
-<br><br>
-
-Get-Module 
-
+```powershell
+Install-Module -Name Az.Adm
+```
+## Place Tags on all resources in a resource group
+```powershell
+Set-AzTag -RG RG-DEV-SCENTUS-001 -ImportCSV .\teste.csv
+```
 output:
-
-![image](https://user-images.githubusercontent.com/83463639/158466944-4d6f4967-26c5-491c-a0cc-eaa7467fd89a.png)
+![image](https://user-images.githubusercontent.com/83463639/158490832-891014fc-0ed1-4bc3-aa32-86bed80fc2d6.png)
 
 
 <br><br><br>
@@ -27,20 +27,19 @@ Example:
 
 <br> <br> <br>
 
-Run the Set-AzTag function
 
-<br><br>
 
-<#
 
-     .SYNOPSIS
+# Help cmdlet
+
+ 	.SYNOPSIS
       #################################################################################################################
-      #                              Criador: Diogo De Santana Jacome                                                 #
-      #                              Empresa:  Solo Network                                                           #
-      #                              Modifcado por: Diogo De Santana Jacome                                           #
+      #                              Created by: Diogo De Santana Jacome                                              #
+      #                                                                                                               #
+      #                              Modified by: Diogo De Santana Jacome                                             #
       #                                                                                                               #
       #                                                                                                               #
-      #                                          Versão: 1.0                                                          #
+      #                                          Version: 1.0                                                         #
       #                                                                                                               #
       #                                                                                                               #
       #################################################################################################################   
@@ -60,8 +59,8 @@ Run the Set-AzTag function
       C:\PS> Set-AzTag -RG "My Resource Group Name" -Tag_Name Env -Tag_value PRD
     
 
-    .LINK 
-      https://github.com/Didjacome        
+		.LINK 
+      https://github.com/Didjacome     
 
 
 
