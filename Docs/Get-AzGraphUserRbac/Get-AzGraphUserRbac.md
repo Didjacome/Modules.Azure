@@ -102,16 +102,19 @@ output:
       https://github.com/Didjacome
 
 
+# Prerequisites
+
+You can use the Az.Adm Module in both Cloudshell and Powershell Desktop.
+
+You need to have installed the modules:
+
+|Modules | Version |
+|--------|---------|
+|Az.Accounts|2.6.2|
+|Az.Resources|5.1.0|
+|az.Adm|1.0.5|
+
+This module performs API queries from graph, remember to give the correct permissions that are described in the help
+
+By default to use graph API you need to have Azure AD premium 1
 	
-        
-
-
-
-
-
-
-
-
-
-
-
