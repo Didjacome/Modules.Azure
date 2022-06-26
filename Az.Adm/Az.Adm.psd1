@@ -69,10 +69,10 @@ PowerShellVersion = '7.2.2'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDiskOs")
+FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk")
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDiskOs")
+CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk")
 
 # Variables to export from this module
 #VariablesToExport = '*'
