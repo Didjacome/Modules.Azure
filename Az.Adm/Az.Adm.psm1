@@ -171,7 +171,7 @@ function  Get-AzAdGroupRbac {
 
 
         else {
-        Write-Host ['Group does not exist
+          Write-Host ['Group does not exist
  
         Please go to ''https://github.com/Didjacome'] -ForegroundColor DarkRed
         }
@@ -327,7 +327,7 @@ function Set-AzTag {
 	
         
 #>
-function Convert-CsvTohashtable{
+function Convert-CsvTohashtable {
   param (
     # Parameter help description
     [Parameter(Mandatory)]
@@ -422,12 +422,13 @@ function Get-AzGraphUserRbac {
   [string]$cf = $cifrao + $filter
   [string]$cs = $cifrao + $select
     
-  $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
-  $File_CSV_License = "license.csv"
+  $Uri_MS_License = 'https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv'
+  $File_CSV_License = 'license.csv'
   if ((Test-Path $File_CSV_License) -eq $false) {
-    invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
+    Invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
     $data = Import-Csv $File_CSV_License
-  }else {
+  }
+  else {
     $data = Import-Csv $File_CSV_License
   }
 
@@ -493,7 +494,7 @@ function Get-AzGraphUserRbac {
   $DefaultMFA = $mfajson.defaultMfaMethod
 
   $countMFAMethods = ($mfajson.methodsRegistered).count
-  if($countMFAMethods -gt 1){
+  if ($countMFAMethods -gt 1) {
     $MethodsRegist = $mfajson.methodsRegistered
     function MethodsWords ($i, $f, $p) {
       $start = $i
@@ -513,7 +514,8 @@ function Get-AzGraphUserRbac {
     $go = 1
   
     $MethodsMFA = MethodsWords -i $initiation -f $end -p $go
-  } else {
+  }
+  else {
     $MethodsMFA = $mfajson.methodsRegistered 
   }
  
@@ -538,7 +540,7 @@ function Get-AzGraphUserRbac {
   
   $Userjson = ($User.content | ConvertFrom-Json).value
   $SignInName = $Userjson.userPrincipalName
-  $displayName =  $Userjson.displayName
+  $displayName = $Userjson.displayName
   $DateCreate = $Userjson.createdDateTime
   $BlockCredential = $Userjson.accountEnabled
   $DN = $Userjson.onPremisesDistinguishedName  
@@ -551,7 +553,7 @@ function Get-AzGraphUserRbac {
     $licenseId = $licensejson.skuId
     foreach ($licenseIds in $licenseId) {
       $Popline = ' | ' 
-      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | get-unique
+      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | Get-Unique
       $licenseNames = $LicenseName + $Popline 
 
       $LicenseAll = [LicenseAll]::new()
@@ -674,12 +676,13 @@ function Get-AzGraphUser {
   [string]$cf = $cifrao + $filter
   [string]$cs = $cifrao + $select
     
-  $Uri_MS_License = "https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv"
-  $File_CSV_License = "license.csv"
+  $Uri_MS_License = 'https://download.microsoft.com/download/e/3/e/e3e9faf2-f28b-490a-9ada-c6089a1fc5b0/Product%20names%20and%20service%20plan%20identifiers%20for%20licensing.csv'
+  $File_CSV_License = 'license.csv'
   if ((Test-Path $File_CSV_License) -eq $false) {
-    invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
+    Invoke-WebRequest -Uri $Uri_MS_License -OutFile $File_CSV_License
     $data = Import-Csv $File_CSV_License
-  }else {
+  }
+  else {
     $data = Import-Csv $File_CSV_License
   }
 
@@ -744,7 +747,7 @@ function Get-AzGraphUser {
   $DefaultMFA = $mfajson.defaultMfaMethod
 
   $countMFAMethods = ($mfajson.methodsRegistered).count
-  if($countMFAMethods -gt 1){
+  if ($countMFAMethods -gt 1) {
     $MethodsRegist = $mfajson.methodsRegistered
     function MethodsWords ($i, $f, $p) {
       $start = $i
@@ -764,7 +767,8 @@ function Get-AzGraphUser {
     $go = 1
   
     $MethodsMFA = MethodsWords -i $initiation -f $end -p $go
-  } else {
+  }
+  else {
     $MethodsMFA = $mfajson.methodsRegistered 
   }
 
@@ -787,9 +791,9 @@ function Get-AzGraphUser {
   }
   
   $Userjson = ($User.content | ConvertFrom-Json).value
-  $displayName =  $Userjson.displayName
+  $displayName = $Userjson.displayName
   $SignName = $Userjson.mail 
-  $SignNameValidate = $SignName.Replace('#EXT#@sotreqcloud.onmicrosoft.com','').Replace('_','@')
+  $SignNameValidate = $SignName.Replace('#EXT#@sotreqcloud.onmicrosoft.com', '').Replace('_', '@')
   $DateCreate = $Userjson.createdDateTime
   $BlockCredential = $Userjson.accountEnabled
   $DN = $Userjson.onPremisesDistinguishedName  
@@ -802,7 +806,7 @@ function Get-AzGraphUser {
     $licenseId = $licensejson.skuId
     foreach ($licenseIds in $licenseId) {
       $Popline = ' | ' 
-      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | get-unique
+      $LicenseName = ($data | Where-Object GUID -EQ $licenseIds).Product_Display_Name | Get-Unique
       $licenseNames = $LicenseName + $Popline 
 
       $LicenseAll = [LicenseAll]::new()
@@ -1087,39 +1091,79 @@ function  New-AzSnapshotDiskAll {
         if ($ResourceGroupName -eq '') {
           $ResourceGroupName = $vms.ResourceGroupName
         }
-  
-        if ($tag -eq $null) {
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
-            }
-          }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -VmName $VmName
-        }
         
-        if ($Tag -ne $null) {
-          function SetSnapNameAndDiskIdtag ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
+        if ($CountDiskDatas -ne 1) {
+          if ($tag -eq $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
             }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -ResourceGroupName $ResourceGroupName
           }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag
+        
+          if ($Tag -ne $null) {
+            function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag -ResourceGroupName $ResourceGroupName
+
+          }
+        }
+
+        if ($CountDiskDatas -eq 1) {
+          if ($tag -eq $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -ResourceGroupName $ResourceGroupName
+          }
+        
+          if ($Tag -ne $null) {
+            function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag -ResourceGroupName $ResourceGroupName
+
+          }
 
         }
       }
@@ -1160,42 +1204,82 @@ function  New-AzSnapshotDiskAll {
         if ($ResourceGroupName -eq '') {
           $ResourceGroupName = $vms.ResourceGroupName
         }
-  
-        if ($tag -eq $null) {
+
+
+        If ($CountDiskDatas -ne 1) {
+          if ($tag -eq $null) {
           
         
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
             }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -ResourceGroupName $ResourceGroupName
           }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -VmName $VmName
-        }
-        if ($tag -ne $null) {
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
+          if ($tag -ne $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
             }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag -ResourceGroupName $ResourceGroupName
           }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag
-        }
+        }  
+
+
+        If ($CountDiskDatas -eq 1) {
+          if ($tag -eq $null) {
+          
         
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -ResourceGroupName $ResourceGroupName
+          }
+          if ($tag -ne $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -VmName $VmName -Tag $Tag -ResourceGroupName $ResourceGroupName
+          }
+        }  
       }
     }
 
@@ -1259,40 +1343,83 @@ function  New-AzSnapshotDiskAll {
         if ($ResourceGroupName -eq '') {
           $ResourceGroupName = $vms.ResourceGroup
         }
-  
-        if ($tag -eq $null) {
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
-            }
-          }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -ComputerName $ComputerName
-        }
-        
-        if ($Tag -ne $null) {
-          function SetSnapNameAndDiskIdtag ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
-            }
-          }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -ComputerName  $ComputerName -Tag $Tag
 
+
+        if ( $CountDiskDatas -ne 1) {
+          if ($tag -eq $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -ResourceGroupName $ResourceGroupName
+          }
+        
+          if ($Tag -ne $null) {
+            function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName  $ComputerName -Tag $Tag -ResourceGroupName $ResourceGroupName
+
+          }
+        }
+
+
+
+
+        if ( $CountDiskDatas -eq 1) {
+          if ($tag -eq $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -ResourceGroupName $ResourceGroupName
+          }
+        
+          if ($Tag -ne $null) {
+            function SetSnapNameAndDiskIdtag ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskIdtag -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName  $ComputerName -Tag $Tag -ResourceGroupName $ResourceGroupName
+
+          }
         }
       }
 
@@ -1335,45 +1462,90 @@ function  New-AzSnapshotDiskAll {
         if ($ResourceGroupName -eq '') {
           $ResourceGroupName = $vms.ResourceGroup
         }
+
+
+
+
+        if ($CountDiskDatas -ne 1) {
   
-        if ($tag -eq $null) {
+          if ($tag -eq $null) {
           
         
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
             }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -ResourceGroupName $ResourceGroupName
           }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -ComputerName $ComputerName
-        }
-        if ($tag -ne $null) {
-          function SetSnapNameAndDiskId ($i, $f, $p) {
-            $start = $i
-            While ($start -le $f) {
-              $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
-              New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
-              $start += $p
+          if ($tag -ne $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId[$start] -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk[$start]  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
             }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -Tag $Tag -ResourceGroupName $ResourceGroupName
           }
-          $numberloop = $DataDiskAllId.count
-          $initiation = 0 
-          $go = 1
-          $end = $numberloop - 1
-          SetSnapNameAndDiskId -i $initiation -f $end -p $go
-          New-AzSnapshotDiskOs -ComputerName $ComputerName -Tag $Tag
-        }
         
-      }
+        }
 
-      
+
+        if ($CountDiskDatas -eq 1) {
+  
+          if ($tag -eq $null) {
+          
+        
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -ResourceGroupName $ResourceGroupName
+          }
+          if ($tag -ne $null) {
+            function SetSnapNameAndDiskId ($i, $f, $p) {
+              $start = $i
+              While ($start -le $f) {
+                $SnapshotConfig = New-AzSnapshotConfig -SourceUri $DataDiskAllId -Location $Location -CreateOption copy -Tag $Tag
+                New-AzSnapshot -Snapshot $SnapshotConfig -SnapshotName $SnapshotNameDisk  -ResourceGroupName $ResourceGroupName | Out-Null
+                $start += $p
+              }
+            }
+            $numberloop = $DataDiskAllId.count
+            $initiation = 0 
+            $go = 1
+            $end = $numberloop - 1
+            SetSnapNameAndDiskId -i $initiation -f $end -p $go
+            New-AzSnapshotDiskOs -ComputerName $ComputerName -Tag $Tag -ResourceGroupName $ResourceGroupName
+          }
+        
+        }
+
+      }
     }
 
   }
