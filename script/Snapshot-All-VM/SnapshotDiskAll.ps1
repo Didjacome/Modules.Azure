@@ -15,7 +15,7 @@ Write-Host "You will be prompted for your account to access the subscription. " 
 $ClientId = Read-Host "Enter the Service Principal Client ID or Account: " 
 $ClientSecret = Read-Host "Enter the Service Principal ClientSecret or Password Account: "
 $tenantid = Read-Host "Enter the Tenant ID: "
-$xlsxPath = Read-Host "Export XLS: "
+$xlsxPath = Read-Host "Export XLSX: "
 
 $listModules = @{ 
   'Az.Accounts'           = '2.7.1'
@@ -23,6 +23,7 @@ $listModules = @{
   'Az.ResourceGraph'      = '0.12.0'
   'Az.Adm'                = '1.0.5'
   'ImportExcel'           = '7.5.3'
+  'Az.Compute'            = '4.21.0'
 }
 
 #validate that pwsh is ADM
