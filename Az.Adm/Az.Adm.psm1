@@ -1657,3 +1657,119 @@ function New-AzSnapshotDisk {
     }
   }
 }
+
+<#
+  .SYNOPSIS
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                                                                                                               #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          Version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
+   
+ 
+    .DESCRIPTION
+     Get-AzVnetInvertory is an advanced function that can be used to generate a report of the current state of your vnets
+     You must have the Reader role in Azure Subscription
+
+     Important:
+     If you have more than one Azure Subscription, connect to the management group to use the "Get-AzVnetInvertory -All" flag.
+
+ 
+    .EXAMPLE
+     C:\PS> Get-AzVnetInvertory
+     
+    .EXAMPLE
+     C:\PS> Get-AzVnetInvertory -vnetName vnet-hub-us
+   
+    .EXAMPLE
+     C:\PS> $vnets= (import-csv vnets.csv).Name
+     C:\PS> Foreach ($vnet in $vnets) {Get-AzVnetInvertory -vnetName $vnet }
+
+    .LINK 
+     https://github.com/Didjacome
+
+
+     
+#>
+
+function Get-AzVnetInvertory  {
+  [CmdletBinding(DefaultParameterSetName = 'All')]
+
+  param (
+    # Parameter help description
+    [Parameter(Mandatory = $false, ParameterSetName = 'vnet')]
+    [System.String]
+    $vnetName,
+
+    [Parameter(Mandatory = $false, ParameterSetName = 'All')]
+    [switch]
+    $All
+)
+
+process {
+    if ($PSCmdlet.ParameterSetName -eq 'All'){
+        $vNets = Get-AzVirtualNetwork
+
+        foreach ($vNet in $vNets) {
+            $subnetList = @()
+            foreach ($subnet in $vNet.Subnets) {
+                $subnetList += "[ $($subnet.Name) | $($subnet.AddressPrefix -join ', ') ] "
+            }
+          
+            $vnetPeeringList = @()
+            foreach ($vnetPeering in $vNet.VirtualNetworkPeerings) {
+                $remoteVNET =  $vnetPeering.RemoteVirtualNetwork
+                $remoteVNETName = ($remoteVNET | foreach-Object {Split-Path $_.Id -leaf}) -join ', '
+                $remoteVNETAddressSpace = $vnetPeering.RemoteVirtualNetworkAddressSpace.AddressPrefixes -join ', '
+                $vnetPeeringList += "[ $($vnetPeering.Name) | $($vnetPeering.PeeringState) | $remoteVNETName | $remoteVNETAddressSpace ] "
+            }
+          
+            [PSCustomObject]@{
+                Name = $vNet.Name
+                ResourceGroupName = $vNet.ResourceGroupName
+                Location = $vNet.Location
+                Id = $vNet.Id
+                AddressSpace =  $vNet.AddressSpace.AddressPrefixes -join ', '
+                Subnets = $subnetList -join ', '
+                VnetPeerings = $vnetPeeringList -join ', '
+                EnableDdosProtection = $vNet.EnableDdosProtection
+            }
+        }
+      }
+    if ($PSCmdlet.ParameterSetName -eq 'vnet'){
+
+        $vNets = Get-AzVirtualNetwork -Name $vnetName
+
+        foreach ($vNet in $vNets) {
+            $subnetList = @()
+            foreach ($subnet in $vNet.Subnets) {
+                $subnetList += "[ $($subnet.Name) | $($subnet.AddressPrefix -join ', ') ] "
+            }
+          
+            $vnetPeeringList = @()
+            foreach ($vnetPeering in $vNet.VirtualNetworkPeerings) {
+                $remoteVNET =  $vnetPeering.RemoteVirtualNetwork
+                $remoteVNETName = ($remoteVNET | foreach-Object {Split-Path $_.Id -leaf}) -join ', '
+                $remoteVNETAddressSpace = $vnetPeering.RemoteVirtualNetworkAddressSpace.AddressPrefixes -join ', '
+                $vnetPeeringList += "[ $($vnetPeering.Name) | $($vnetPeering.PeeringState) | $remoteVNETName | $remoteVNETAddressSpace ] "
+            }
+          
+            [PSCustomObject]@{
+                Name = $vNet.Name
+                ResourceGroupName = $vNet.ResourceGroupName
+                Location = $vNet.Location
+                Id = $vNet.Id
+                AddressSpace =  $vNet.AddressSpace.AddressPrefixes -join ', '
+                Subnets = $subnetList -join ', '
+                VnetPeerings = $vnetPeeringList -join ', '
+                EnableDdosProtection = $vNet.EnableDdosProtection
+            }
+        }
+      }
+  }
+}
