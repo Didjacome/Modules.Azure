@@ -25,5 +25,6 @@ jobs:
         APIKEY: ${{ secrets.APIKEY }}
         path: ${{ github.workspace }}
       run: |
-          cd ${{ github.workspace }}/powershellgallery
+          ls ${{ github.workspace }}
+          cd $path/powershellgallery
           .\publish.ps1
