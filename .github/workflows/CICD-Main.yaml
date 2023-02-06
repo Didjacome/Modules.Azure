@@ -26,5 +26,4 @@ jobs:
         path: ${{ github.workspace }}
       run: |
           ls ${{ github.workspace }}
-          cd $path/powershellgallery
-          .\publish.ps1
+          ${{ github.workspace }}\powershellgallery\publish.ps1
