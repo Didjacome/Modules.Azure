@@ -14,10 +14,11 @@ jobs:
     
     
     steps:
-      - uses: actions/checkout@v1
-        env:
-          APIKEY: ${{ secrets.APIKEY }}
-        run: |
+    - name: Checkout
+      uses: actions/checkout@v3
+      env:
+        APIKEY: ${{ secrets.APIKEY }}
+      run: |
           cd ${{ github.workspace }}/powershellgallery
           .\publish.ps1
-        shell: pwsh
+      shell: pwsh
