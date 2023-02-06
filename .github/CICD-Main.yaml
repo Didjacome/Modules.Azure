@@ -1,0 +1,23 @@
+name: 'Publish'
+on:
+  pull_request:
+     branches:
+       - main
+
+jobs:
+  build:
+    name:  Publish 
+    runs-on: ubuntu-latest
+
+    env:
+      environmentName: Prod
+    
+    
+    steps:
+      - uses: actions/checkout@v1
+        env:
+          APIKEY: ${{ secrets.APIKEY }}
+        run: |
+          cd ${{ github.workspace }}/powershellgallery
+          .\publish.ps1
+        shell: pwsh
