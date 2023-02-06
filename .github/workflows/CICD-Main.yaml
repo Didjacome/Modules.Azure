@@ -23,6 +23,7 @@ jobs:
       shell: pwsh
       env:
         APIKEY: ${{ secrets.APIKEY }}
+        path: ${{ github.workspace }}
       run: |
           cd ${{ github.workspace }}/powershellgallery
           .\publish.ps1
