@@ -1831,6 +1831,7 @@ function Get-OracleObject {
   Begin{
       Add-Type -Path $Path_ManagedDataAccess
       $connection = New-Object Oracle.ManagedDataAccess.Client.OracleConnection
+      $validate_connection_antes = $connection.State
       class OracleResult {
           [string]$BDName
           [string]$DBConnectStatus
@@ -1839,20 +1840,23 @@ function Get-OracleObject {
           [string]$QueryResult
           [string]$DJacome
           [string]$DD
+          [string]$DB_connection_antes
+          [string]$DB_connection_IF
       }
       $OracleResultList = New-Object Collections.Generic.List[OracleResult]
   }
   Process{
       $connection = New-Object Oracle.ManagedDataAccess.Client.OracleConnection($connectionString)
       $connection.Open()
-      if ( $connection.State -eq "Closed"){
+      $validate_connection = $connection.State
+      if ( $validate_connection -eq "Closed"){
           $entrou = "entrou no IF"
           $DB_Connect_Status = "time out"
           $DB_Host = "time out"
           $DB_Serverversion = "time out"
           $status = "time out"
           $DB_query_result = "time out"
-      }elseif ($connection.State -eq "Open") {
+      }elseif ($validate_connection -eq "Open") {
           $entrou = "entrou no Else"
           $DB_Connect_Status = $connection.State
           $DB_Host = $connection.HostName
@@ -1874,6 +1878,8 @@ function Get-OracleObject {
       $OracleResult.QueryResult += $DB_query_result
       $OracleResult.DJacome += $diogo
       $OracleResult.DD += $entrou
+      $OracleResult.DB_connection_antes += $validate_connection_antes
+      $OracleResult.DB_connection_IF += $validate_connection
       $OracleResultList.add($OracleResult)
   }
   end{
