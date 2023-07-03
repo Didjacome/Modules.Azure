@@ -12,7 +12,7 @@
 RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.10-previwer'
+ModuleVersion = '1.0.10'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
