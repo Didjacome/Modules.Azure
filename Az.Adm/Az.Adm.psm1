@@ -1868,6 +1868,7 @@ function Get-OracleObject {
               $DB_query_result = $reader.GetString(0)
           }
       }
+      $connection.PurgeStatementCache()
       if ($connection.State -eq 'Open') { $connection.close() ; $reader.Close()}else{$diogo="nao fechou ja esta fechada"}
 
       $OracleResult = [OracleResult]::new()
