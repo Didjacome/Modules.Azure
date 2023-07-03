@@ -1773,3 +1773,110 @@ process {
       }
   }
 }
+
+<#
+  .SYNOPSIS
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                                                                                                               #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          Version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
+   
+ 
+    .DESCRIPTION
+     Get-OracleObject is an advanced function that can be used to generate a query report in oracle 
+
+     Important:
+     This cmdlet is in previwer
+
+ 
+    .EXAMPLE
+     C:\PS> Get-OracleObject -ConnectionString "XXX" -Query "xxx" -Path_ManagedDataAccess "xxx"
+
+    .LINK 
+     https://github.com/Didjacome
+
+
+     
+#>
+
+function Get-OracleObject {
+  [cmdletbinding(
+      DefaultParameterSetName = '',
+      ConfirmImpact = 'low'
+  )]
+  param (
+      [Parameter(
+      Mandatory = $True,
+      Position = 0,
+      ParameterSetName = '',
+      ValueFromPipeline = $True)]
+      [string]$ConnectionString,
+      [Parameter(
+          Position = 1,
+          Mandatory = $True,
+          ParameterSetName = '')]
+      [string]$Query,
+      [Parameter(
+          Position = 2,
+          Mandatory = $True,
+          ParameterSetName = '')]
+      [string]$Path_ManagedDataAccess
+  )
+  Begin{
+      Add-Type -Path $Path_ManagedDataAccess
+      $connection = New-Object Oracle.ManagedDataAccess.Client.OracleConnection
+      class OracleResult {
+          [string]$BDName
+          [string]$DBConnectStatus
+          [string]$Serverversion
+          [string]$QueryStatus
+          [string]$QueryResult
+          [string]$DJacome
+          [string]$DD
+      }
+      $OracleResultList = New-Object Collections.Generic.List[OracleResult]
+  }
+  Process{
+      $connection = New-Object Oracle.ManagedDataAccess.Client.OracleConnection($connectionString)
+      $connection.Open()
+      if ( $connection.State -eq "Closed"){
+          $entrou = "entrou no IF"
+          $DB_Connect_Status = "time out"
+          $DB_Host = "time out"
+          $DB_Serverversion = "time out"
+          $status = "time out"
+          $DB_query_result = "time out"
+      }elseif ($connection.State -eq "Open") {
+          $entrou = "entrou no Else"
+          $DB_Connect_Status = $connection.State
+          $DB_Host = $connection.HostName
+          $DB_Serverversion = $connection.ServerVersion
+          $command = New-Object Oracle.ManagedDataAccess.Client.OracleCommand($query, $connection)
+          $reader = $command.ExecuteReader()
+          $status = $reader.Read()
+          while ($reader.Read()) {
+              $DB_query_result = $reader.GetString(0)
+          }
+      }
+      if ($connection.State -eq 'Open') { $connection.close() ; $reader.Close()}else{$diogo="nao fechou ja esta fechada"}
+
+      $OracleResult = [OracleResult]::new()
+      $OracleResult.BDName += $DB_Host
+      $OracleResult.DBConnectStatus += $DB_Connect_Status
+      $OracleResult.Serverversion += $DB_Serverversion
+      $OracleResult.QueryStatus += $status
+      $OracleResult.QueryResult += $DB_query_result
+      $OracleResult.DJacome += $diogo
+      $OracleResult.DD += $entrou
+      $OracleResultList.add($OracleResult)
+  }
+  end{
+      return $OracleResultList 
+  }
+}
