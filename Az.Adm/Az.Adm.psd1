@@ -12,7 +12,7 @@
 RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.8'
+ModuleVersion = '1.0.9'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,10 +69,10 @@ PowerShellVersion = '7.2.2'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory")
+FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory", "Get-OracleObject")
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory")
+CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory", "Get-OracleObject")
 
 # Variables to export from this module
 #VariablesToExport = '*'
