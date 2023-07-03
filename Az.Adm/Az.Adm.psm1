@@ -1821,16 +1821,16 @@ function Get-OracleObject {
           Position = 1,
           Mandatory = $True,
           ParameterSetName = '')]
+      [string]$UserName,
       [Parameter(
           Position = 2,
           Mandatory = $True,
           ParameterSetName = '')]
-      [string]$UserName,
+      [string]$Psswd,
       [Parameter(
           Position = 3,
           Mandatory = $True,
           ParameterSetName = '')]
-      [string]$Psswd,
       [string]$Query,
       [Parameter(
           Position = 4,
