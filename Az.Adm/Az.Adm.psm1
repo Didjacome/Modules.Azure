@@ -1821,9 +1821,19 @@ function Get-OracleObject {
           Position = 1,
           Mandatory = $True,
           ParameterSetName = '')]
-      [string]$Query,
       [Parameter(
           Position = 2,
+          Mandatory = $True,
+          ParameterSetName = '')]
+      [string]$UserName,
+      [Parameter(
+          Position = 3,
+          Mandatory = $True,
+          ParameterSetName = '')]
+      [string]$Psswd,
+      [string]$Query,
+      [Parameter(
+          Position = 4,
           Mandatory = $True,
           ParameterSetName = '')]
       [string]$Path_ManagedDataAccess
@@ -1843,6 +1853,8 @@ function Get-OracleObject {
       $sb = [Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder]::new()
       $sb["Statement Cache Size"] = 0
       $sb["Data Source"] = $connectionString
+      $sb["User Id"] = $UserName
+      $sb.Password = $Psswd
       $connection = New-Object Oracle.ManagedDataAccess.Client.OracleConnection($sb.connectionString)
       $connection.Open()
       $validate_connection = $connection.State
