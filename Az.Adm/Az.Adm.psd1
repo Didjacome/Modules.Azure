@@ -12,7 +12,7 @@
 RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.9'
+ModuleVersion = '1.0.10-previwer'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) Diogo De Santana Jacome. All rights reserved.'
 Description = 'Function to help in the everyday to manage Microsoft Azure. This module supports PowerShell 7.2.2 For more information about the Az.Adm module, visit the following: https://github.com/Didjacome/Modules.Azure'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.2.2'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
