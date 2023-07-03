@@ -8,6 +8,8 @@ Tags: Powershell, Azure, Adm, Management, Accounts, Rbac, Snapshot, Assessment, 
 ![GitHub top language](https://img.shields.io/github/languages/top/Didjacome/Modules.Azure)
 [![Azure](https://badgen.net/badge/icon/azure?icon=azure&label)](https://azure.microsoft.com)
 
+![Workflow Powershellgallery](https://github.com/Didjacome/Modules.Azure/workflows/Publish/badge.svg)
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/Didjacome/Modules.Azure)
 [![](https://img.shields.io/powershellgallery/v/az.adm)](https://www.powershellgallery.com/packages/Az.Adm)
 [![](https://img.shields.io/powershellgallery/dt/az.adm)](https://www.powershellgallery.com/packages/Az.Adm)
@@ -41,6 +43,7 @@ This module contains the cmdlets for security assessments, to help support teams
 |`New-AzSnapshotDiskAll` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskAll/New-AzSnapshotDiskAll.md) | Az.Resources, Az.Accounts, Az.ResourceGraph, Az.compute|
 |`New-AzSnapshotDiskOs` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskOS/New-AzSnapshotDiskOS.md) | Az.Resources, Az.Accounts, Az.ResourceGraph,Az.compute|
 |`Set-AzTag` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Set-AzTag/README_Set-AzTag.md) |  Az.Resources, Az.Accounts|
+|`Get-AzVnetInvertory` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzVnetInvertory/README_Get-AzADGroupRBAC.md) |  Az.Resources, Az.Accounts, Az.Adm|
 
 
 ## Installation
