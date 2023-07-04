@@ -12,7 +12,7 @@
 RootModule = 'Az.Adm.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.15'
+ModuleVersion = '1.0.16'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) Diogo De Santana Jacome. All rights reserved.'
 Description = 'Function to help in the everyday to manage Microsoft Azure. This module supports PowerShell 7.2.2 For more information about the Az.Adm module, visit the following: https://github.com/Didjacome/Modules.Azure'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '5.1'
+PowerShellVersion = '7.2.2'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -69,10 +69,10 @@ PowerShellVersion = '5.1'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory", "Get-OracleObject")
+FunctionsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory")
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory", "Get-OracleObject")
+CmdletsToExport = @("Get-AzADGroupRBAC", "Set-AzTag", "Get-AzGraphUserRbac", "Get-AzGraphUser", "New-AzSnapshotDiskOs", "New-AzSnapshotDiskAll", "New-AzSnapshotDisk", "Get-AzVnetInvertory")
 
 # Variables to export from this module
 #VariablesToExport = '*'
