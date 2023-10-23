@@ -1,4 +1,4 @@
-# Cmdlet "Get-AzADGroupRBAC"
+# Cmdlet "Get-AzVnetInvertory"
 
 # Summary
 Perform the inventory of all vnets <br>
@@ -10,7 +10,7 @@ You can export the output to a general report in CSV
 ```powershell
 Install-Module -Name Az.Adm
 ```
-## Validating the group
+## Validating the vnet
 ```powershell
 Get-AzVnetInvertory -vnetName vnet-hub-us
 ```
@@ -66,7 +66,7 @@ loading...
 
     
     .EXAMPLE
-      C:\PS> Get-AzVnetInvertory
+      C:\PS> Get-AzVnetInvertory -All
 				
     .EXAMPLE
       C:\PS> Get-AzVnetInvertory -vnetName vnet-hub-us
