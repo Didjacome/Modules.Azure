@@ -43,7 +43,7 @@ This module contains the cmdlets for security assessments, to help support teams
 |`New-AzSnapshotDiskAll` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskAll/New-AzSnapshotDiskAll.md) | Az.Resources, Az.Accounts, Az.ResourceGraph, Az.compute|
 |`New-AzSnapshotDiskOs` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskOS/New-AzSnapshotDiskOS.md) | Az.Resources, Az.Accounts, Az.ResourceGraph,Az.compute|
 |`Set-AzTag` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Set-AzTag/README_Set-AzTag.md) |  Az.Resources, Az.Accounts|
-|`Get-AzVnetInvertory` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzVnetInvertory/README_Get-AzADGroupRBAC.md) |  Az.Resources, Az.Accounts, Az.Adm|
+|`Get-AzVnetInvertory` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzVnetInvertory/Get-AzVnetInvertory.md) |  Az.Resources, Az.Accounts, Az.Adm|
 
 
 ## Installation
