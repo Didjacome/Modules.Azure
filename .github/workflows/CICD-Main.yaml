@@ -1,11 +1,14 @@
 name: 'Publish'
 on:
   pull_request:
-     branches:
-       - main
+    types:
+      - opened
+    branches:
+      - main
 
 jobs:
   build:
+    if:  "!startsWith(github.head_ref, 'docs/')"
     name:  Publish 
     runs-on: ubuntu-latest
 
