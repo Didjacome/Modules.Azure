@@ -1773,3 +1773,136 @@ process {
       }
   }
 }
+
+
+
+<#
+  .SYNOPSIS
+     #################################################################################################################
+     #                              Created by: Diogo De Santana Jacome                                              #
+     #                              Co-creator: Isaías Vaz Moreira                                                   #
+     #                              Modified by: Diogo De Santana Jacome                                             #
+     #                                                                                                               #
+     #                                                                                                               #
+     #                                          Version: 1.0                                                         #
+     #                                                                                                               #
+     #                                                                                                               #
+     #################################################################################################################   
+   
+ 
+    .DESCRIPTION
+    Get-AzValidateWebAppMigrate is an advanced function for verifying that Azure Web App and Azure Functions are in their source resource groups, thereby facilitating potential subscription migration. 
+    Using logic to validate whether the "RG" is the same as the Azure Web Application and Azure Functions "RG" are the same as your Apps Plans.
+    You need to have role Reader in Subscription Azure or equivalent access.
+
+     Important:
+     The "-Export" flag will create a file "AzureWebAPP-Migrate.xlsx" in the current directory.
+
+ 
+    .EXAMPLE
+     C:\PS> Get-AzValidateWebAppMigrate
+     
+    .EXAMPLE
+     C:\PS> Get-AzValidateWebAppMigrate -AppName webApp-test
+   
+    .EXAMPLE
+     C:\PS> Get-AzValidateWebAppMigrate -All -Export
+
+    .LINK 
+     https://github.com/Didjacome
+
+
+     
+#>
+
+function Get-AzValidateWebAppMigrate {
+
+  [CmdletBinding(DefaultParameterSetName = 'All')]
+  param (
+    [Parameter(Mandatory = $false)]
+    [switch]
+    $Export,
+
+    [Parameter(Mandatory = $false, ParameterSetName = 'name')]
+    [System.String]
+    $AppName,
+
+    [Parameter(Mandatory = $false, ParameterSetName = 'All')]
+    [switch]
+    $All
+  )
+
+  process {
+    class App {
+      [string]$WebAppName
+      [string]$RGWebApp
+      [string]$Kind
+      [string]$CutomDNS
+      [string]$LastModifiedTimeUtc
+      [string]$State
+      [string]$Vnet
+      [string]$AppServicePlanName
+      [string]$RGAppPlan
+      [bool]$ChangeRG
+      [string]$Move
+    }
+
+    $Applist = New-Object 'System.Collections.Generic.List[App]'
+
+    if ($PSCmdlet.ParameterSetName -eq 'All') {
+      $webapp = Get-AzWebApp
+
+      foreach ($i in $webapp ) {
+        $AppServicePlan = Get-AzResource -ResourceId $i.ServerFarmId
+
+        $App = [App]::new()
+        $App.WebAppName = $i.Name
+        $App.RGWebApp = $i.ResourceGroup
+        $app.Kind = $i.Kind
+        $App.CutomDNS = $i.HostNames | Where-Object { $_ -notmatch 'azure' }
+        $App.LastModifiedTimeUtc = $i.LastModifiedTimeUtc
+        $App.Vnet = $i.VirtualNetworkSubnetId
+        $app.State = $i.State
+        $App.AppServicePlanName = $AppServicePlan.Name
+        $App.RGAppPlan = $AppServicePlan.ResourceGroupName
+        $app.ChangeRG = $AppServicePlan.ResourceGroupName -notmatch $i.ResourceGroup
+        $App.Move = if ($app.ChangeRG -eq $true) { 'To migrate, you need to move the Web App ' + $i.Name + ' to the source RG ' + $AppServicePlan.ResourceGroupName + '.' }else { "For the migration, it's not necessary to move." }
+        $Applist.add($App)
+      }
+
+
+      if ($Export -eq $true ) {
+        $Applist | Export-Excel -Path "./AzureWebAPP-Migrate.xlsx" -WorksheetName 'Azure Web App' -AutoSize -TableStyle 'Light9' -FreezeTopRow -Append
+      }
+      return $Applist
+    } 
+
+    if ($PSCmdlet.ParameterSetName -eq 'name') {
+      $webapp = Get-AzWebApp -Name $AppName
+
+      foreach ($i in $webapp ) {
+        $AppServicePlan = Get-AzResource -ResourceId $i.ServerFarmId
+
+        $App = [App]::new()
+        $App.WebAppName = $i.Name
+        $App.RGWebApp = $i.ResourceGroup
+        $app.Kind = $i.Kind
+        $App.CutomDNS = $i.HostNames | Where-Object { $_ -notmatch 'azure' }
+        $App.LastModifiedTimeUtc = $i.LastModifiedTimeUtc
+        $App.Vnet  = $i.VirtualNetworkSubnetId
+        $app.State = $i.State
+        $App.AppServicePlanName = $AppServicePlan.Name
+        $App.RGAppPlan = $AppServicePlan.ResourceGroupName
+        $app.ChangeRG = $AppServicePlan.ResourceGroupName -notmatch $i.ResourceGroup
+        $App.Move = if ($app.ChangeRG -eq $true) { 'To migrate, you need to move the Web App ' + $i.Name + ' to the source RG ' + $AppServicePlan.ResourceGroupName + '.' }else { "For the migration, it's not necessary to move." }
+        $Applist.add($App)
+      }
+
+      if ($Export -eq $true ) {
+        $Applist | Export-Excel -Path "./AzureWebAPP-Migrate.xlsx" -WorksheetName 'Azure Web App' -AutoSize -TableStyle 'Light9' -FreezeTopRow -Append
+      }
+
+      return $Applist
+    }
+  }
+}
