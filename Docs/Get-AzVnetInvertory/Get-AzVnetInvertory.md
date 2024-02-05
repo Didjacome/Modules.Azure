@@ -16,7 +16,8 @@ Get-AzVnetInvertory -vnetName vnet-hub-us
 ```
 <br>
 
-pending...
+![image](https://github.com/Didjacome/Modules.Azure/assets/83463639/6fb43bc4-2e91-4a53-9b29-07d4ae20d741)
+
 
 <br>
 
