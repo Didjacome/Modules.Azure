@@ -10,29 +10,16 @@ Using logic to validate whether the "RG" is the same as the Azure Web Applicatio
 ```powershell
 Install-Module -Name Az.Adm
 ```
-## Validating the vnet
+## Validating all Azure web app
 ```powershell
 Get-AzValidateWebAppMigrate
 ```
 <br>
 
-pending...
+![image](https://github.com/Didjacome/Modules.Azure/assets/83463639/d74e8b61-530d-4b3e-ab3c-cbf00a02143b)
+
 
 <br>
-
-# Stage
-
-loading...
-
-# Step on
-loading...
-
-output:
-
-loading...
-
-
-
 
 # Help cmdlet
 
