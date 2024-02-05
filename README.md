@@ -44,7 +44,7 @@ This module contains the cmdlets for security assessments, to help support teams
 |`New-AzSnapshotDiskOs` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/New-AzSnapshotDiskOS/New-AzSnapshotDiskOS.md) | Az.Resources, Az.Accounts, Az.ResourceGraph, Az.compute|
 |`Set-AzTag` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Set-AzTag/README_Set-AzTag.md) |  Az.Resources, Az.Accounts|
 |`Get-AzVnetInvertory` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzVnetInvertory/Get-AzVnetInvertory.md) |  Az.Resources, Az.Accounts, Az.Adm|
-|`Get-AzValidateWebAppMigrate` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzValidateWebAppMigrate/Get-AzValidateWebAppMigrate.md) |  Az.Resources, Az.Accounts, Az.Adm, ImportExcel|
+|`Get-AzValidateWebAppMigrate` |[Basic Usage](https://github.com/Didjacome/Modules.Azure/blob/main/Docs/Get-AzValidateWebAppMigrate/Get-AzValidateWebAppMigrate.md) |  Az.Resources, Az.Accounts, Az.Websites, Az.Adm, ImportExcel|
 
 
 ## Installation
@@ -66,8 +66,9 @@ What you need to run the script
 2. Install-Module Az.Resources
 3. Install-Module Az.ResourceGraph
 4. Install-Module Az.Compute
-5. Install-Module ImportExcel
-6. Install-Module Az.Adm
+5. Install-Module Az.Websites
+6. Install-Module ImportExcel
+7. Install-Module Az.Adm
 ```
 
 |Modules | Version |
@@ -76,6 +77,7 @@ What you need to run the script
 |Az.Resources|5.1.0|
 |AZ.ResourceGraph|0.12.0|
 |Az.Compute|5.2.0|
+|Az.Websites|2.12.0|
 |ImportExcel|7.8.6|
 
 ## Folder Structures
